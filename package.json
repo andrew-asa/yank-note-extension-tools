@@ -39,7 +39,6 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "dayjs": "^1.10.5",
     "@rollup/plugin-node-resolve": "^13.2.1",
     "@rollup/plugin-replace": "^4.0.0",
     "@vitejs/plugin-vue": "^2.3.2",
@@ -47,6 +46,7 @@
     "@vue/eslint-config-typescript": "^10.0.0",
     "@yank-note/runtime-api": "workspace:^3.30.0",
     "conventional-changelog-cli": "^2.2.2",
+    "dayjs": "^1.10.5",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
@@ -56,5 +56,12 @@
     "vite": "^2.9.8",
     "vue": "^3.2.33",
     "vue-tsc": "^0.34.11"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^2.0.8",
+    "element-plus": "^2.2.9",
+    "jquery": "^3.6.0"
   }
 }

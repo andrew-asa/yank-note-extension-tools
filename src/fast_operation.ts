@@ -7,6 +7,7 @@ import {
   deleteOutLinkLocationImage,
   duplicateLine, moveLineDown, moveLineUp
 } from '@/utils/ghost_base_utils'
+import { triggerEditPanel } from '@/markdown_edit'
 
 export default function () {
   registerPlugin({
@@ -14,11 +15,16 @@ export default function () {
     register: ctx => {
       // 添加状态栏菜单
       ctx.statusBar.tapMenus(menus => {
-        menus['EXTENSION_NAME+ plugin-fast-operation'] = {
+        menus[EXTENSION_NAME+ 'plugin-fast-operation'] = {
           id: EXTENSION_NAME + 'plugin-fast-operation',
           position: 'left',
-          title: '快捷操作',
+          title: '编辑',
           list: [{
+            id: EXTENSION_NAME + 'edit',
+            type: 'normal',
+            title: '编辑',
+            onClick: triggerEditPanel
+          },{
             id: EXTENSION_NAME + 'plugin-delete-after',
             type: 'normal',
             title: '删除光标后的行',

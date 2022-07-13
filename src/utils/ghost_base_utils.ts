@@ -234,10 +234,10 @@ export function deleteOutLinkLocationImage () {
       var link = item[2]
       var linkPath = resolve(dir, link)
       var name = basename(link)
-      // @ts-ignore
       deleteDoc({
         name: name,
         path: linkPath,
+        // @ts-ignore
         repo: currentFile.repo,
         type: 'file'
       })
@@ -262,4 +262,15 @@ export function parseImgLink (link) {
     ret.push(matcher)
   }
   return ret
+}
+
+export function createI18n (key: string, cn: string, en: string) {
+  const enI = {}
+  enI[key] = en
+  const cnI = {}
+  cnI[key] = cn
+  ctx.i18n.createI18n({
+    en: enI,
+    'zh-CN': cnI
+  })
 }

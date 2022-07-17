@@ -57,11 +57,18 @@ export function getCurrentColumnNumber () {
   return ctx.editor.getEditor().getPosition().column
 }
 
+/**
+ * 获取当前文档的行数
+ */
 export function getLineCount () {
   // @ts-ignore
   return ctx.editor.getEditor().getModel().getLineCount()
 }
 
+/**
+ * 获取指定行的文本内容
+ * @param lineNumber
+ */
 export function getLineContent (lineNumber: number) {
   return ctx.editor.getLineContent(lineNumber)
 }
@@ -70,6 +77,9 @@ export function getCurrentLineContent () {
   return getLineContent(getCurrentLineNumber())
 }
 
+/**
+ * 获取当前仓库
+ */
 export function getCurrentRepo () {
   return ctx.storage.get('currentRepo')
 }
@@ -103,12 +113,18 @@ export function replaceCurrentLine (text) {
   replaceLine(ln, text)
 }
 
+/**
+ * 删除光标起的行
+ */
 export function deleteAfter () {
   var startLineNumber = getCurrentLineNumber()
   var endLineNumber = getLineCount()
   replaceLines(startLineNumber, endLineNumber, null)
 }
 
+/**
+ * 重复行
+ */
 export function duplicateLine () {
   var lineNumber = getCurrentLineNumber()
   var content = getLineContent(lineNumber)
@@ -144,6 +160,38 @@ export function moveLineDown () {
     var tS = getLineContent(lineNumber)
     replaceLines(lineNumber, downNumber, dS + '\n' + tS)
   }
+}
+
+/**
+ * 是否是选中一片文字
+ */
+export function isSelectText () {
+  return ctx.editor.getSelectionInfo().selectedLength > 0
+}
+
+/**
+ * 替换选中的文档
+ * @param text
+ */
+export function replaceSelect (text: string) {
+  const selection = ctx.editor.getEditor().getSelection()!
+  ctx.editor.getEditor().executeEdits('', [
+    {
+      range: new (ctx.editor.getMonaco().Range)(selection.startLineNumber, selection.startColumn, selection.endLineNumber, selection.endColumn),
+      text,
+      forceMoveMarkers: true
+    }
+  ])
+  ctx.editor.getEditor().focus()
+}
+
+/**
+ * 获取选中的内容
+ */
+export function getSelectText () {
+  const selection = ctx.editor.getEditor().getSelection()
+  // @ts-ignore
+  return ctx.editor.getEditor().getModel().getValueInRange(selection)
 }
 
 /**
@@ -192,6 +240,10 @@ export function clipboardTableOcr () {
   // });
 }
 
+/**
+ * 删除文档
+ * @param doc
+ */
 export function deleteDoc (doc) {
   ctx.doc.deleteDoc(doc)
 }
@@ -274,3 +326,5 @@ export function createI18n (key: string, cn: string, en: string) {
     'zh-CN': cnI
   })
 }
+
+

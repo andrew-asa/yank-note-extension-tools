@@ -29,6 +29,7 @@
     "icon.png"
   ],
   "scripts": {
+    "vite": "vite",
     "link-extension": "link-yn-extension",
     "unlink-extension": "link-yn-extension --unlink",
     "dev": "vite build --watch",
@@ -59,9 +60,12 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@fortawesome/vue-fontawesome": "^2.0.8",
+    "@fortawesome/vue-fontawesome": "^3.0.1",
     "element-plus": "^2.2.9",
-    "jquery": "^3.6.0"
+    "vue-awesome": "^4.5.0",
+    "vue-router": "^4.1.2"
   }
 }

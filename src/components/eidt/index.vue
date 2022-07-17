@@ -1,12 +1,38 @@
 <template>
     <div id="toolbar">
+<!--      <el-tooltip v-for="item in toolbars"-->
+<!--                  class="box-item"-->
+<!--                  effect="light"-->
+<!--                  :content=item.tooltipMsg-->
+<!--                  placement="bottom-start"-->
+<!--      >-->
+<!--        <el-button link @click=item.fn()>-->
+<!--          <font-awesome-icon class="svg-icon" :icon=item.icon />-->
+<!--        </el-button>-->
+<!--      </el-tooltip>-->
+
+
       <el-tooltip v-for="item in toolbars"
                   class="box-item"
                   effect="light"
                   :content=item.tooltipMsg
                   placement="bottom-start"
       >
-        <el-button link @click=item.fn()>
+
+        <el-popover v-if=item.popupUp
+                    placement="bottom"
+                    trigger="click"
+                    :popper-class=item.popupPaneCls
+                    width="auto"
+        >
+          <component :is=item.popupPane></component>
+          <template #reference>
+            <el-button link>
+              <font-awesome-icon class="svg-icon" :icon=item.icon />
+            </el-button>
+          </template>
+        </el-popover>
+        <el-button v-else link @click=item.fn()>
           <font-awesome-icon class="svg-icon" :icon=item.icon />
         </el-button>
       </el-tooltip>

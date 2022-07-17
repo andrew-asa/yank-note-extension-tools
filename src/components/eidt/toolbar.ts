@@ -6,6 +6,7 @@ import {
   faPercent, faFill,faAngleDown
 } from '@fortawesome/free-solid-svg-icons'
 import { bold, italic, strikethrough, underline, underlineText } from '@/utils/ghost_base_toolbar'
+import Heading from '@/components/eidt/Heading.vue'
 
 let operation = {
   bold:bold,
@@ -52,6 +53,9 @@ export const toolbar = [{
   name: 'faHeading',
   tooltipMsg: '标题',
   icon: faHeading,
+  popupUp: true,
+  popupPane: Heading,
+  popupPaneCls: 'heading-popup',
   fn: () => {
   },
 }, {

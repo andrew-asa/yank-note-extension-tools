@@ -11,10 +11,13 @@
                 trigger="click"
                 :popper-class=item.popupPaneCls
                 width="auto"
+                :visible=item.popupVisible
     >
-      <component :is=item.popupPane></component>
+      <component :is=item.popupPane :hide="function() {
+        hidePopup(item.name)
+      }"></component>
       <template #reference>
-        <el-button link>
+        <el-button link @click="showPopup(item.name)">
           <font-awesome-icon class="svg-icon" :icon=item.icon />
         </el-button>
       </template>
@@ -50,12 +53,42 @@ export default {
         popupUp: true,
         popupPane: Heading,
         popupPaneCls: 'heading-popup',
+        popupVisible:false,
         fn: () => {
         }
       }
     ])
+
+    function getToolbarItem (name: string) {
+      let len = toolbars.length
+      for (let i = 0; i < len; i++) {
+        if (toolbars[i].name == name) {
+          return toolbars[i];
+        }
+      }
+      return null
+    }
+
+    function showPopup (item:string) {
+      // toolbars[item].popupVisible = true
+      console.log("showPopup ",item)
+      let ti = getToolbarItem(item)
+      if (ti) {
+        ti.popupVisible = true
+      }
+    }
+    function hidePopup (item:string) {
+      // toolbars[item].popupVisible = true
+      console.log("hidePopup ",item)
+      let ti = getToolbarItem(item)
+      if (ti) {
+       ti.popupVisible = false
+      }
+    }
     return {
       toolbars,
+      showPopup,
+      hidePopup
     }
   },
 }

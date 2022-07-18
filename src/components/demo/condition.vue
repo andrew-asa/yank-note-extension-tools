@@ -18,12 +18,12 @@
       }"></component>
       <template #reference>
         <el-button link @click="showPopup(item.name)">
-          <font-awesome-icon class="svg-icon" :icon=item.icon />
+          <font-awesome-icon class="svg-icon" :icon=item.icon ></font-awesome-icon>
         </el-button>
       </template>
     </el-popover>
     <el-button v-else link>
-      <font-awesome-icon class="svg-icon" :icon=item.icon />
+      <font-awesome-icon class="svg-icon" :icon=item.icon ></font-awesome-icon>
     </el-button>
   </el-tooltip>
 </template>

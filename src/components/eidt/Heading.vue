@@ -1,5 +1,5 @@
 <template>
-  <div class="heading-container">
+  <div class="heading-container" v-on:mouseleave=mouseleave>
     <div class="heading h1" @click="head('#')">标题1</div>
     <div class="heading h2" @click="head('##')">标题2</div>
     <div class="heading h3" @click="head('###')">标题3</div>
@@ -25,10 +25,17 @@ export default {
     function head (prefix: string) {
       console.log(prefix)
       props.hide()
+      heading(prefix)
+    }
+
+    function mouseleave () {
+      // console.log("mouseleave")
+      props.hide()
     }
 
     return {
       head,
+      mouseleave
     }
   },
 }

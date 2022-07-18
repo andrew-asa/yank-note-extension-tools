@@ -10,12 +10,14 @@
 
 </template>
 <script lang="ts">
+import {heading} from '@/utils/ghost_base_toolbar'
 
 export default {
 
   setup () {
-    function head(head: string) {
-      console.log(head)
+    function head(prefix: string) {
+      console.log(prefix)
+      heading(prefix)
     }
     return {
       head,

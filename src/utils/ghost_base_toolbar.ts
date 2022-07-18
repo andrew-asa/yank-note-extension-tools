@@ -7,7 +7,6 @@ import {
   replaceSelect
 } from '@/utils/ghost_base_utils'
 
-
 /**
  * 加粗
  */
@@ -149,6 +148,26 @@ export function strikethroughSelect () {
   replaceSelect(strikethroughText(getSelectText()))
 }
 
-export function heading (perfix:string,text:string) {
-  return perfix+ " " + text
+/**
+ * 当前行标题
+ * @param prefix
+ */
+export function heading (prefix: string) {
+  var content = getCurrentLineContent()
+  var lineNumber = getCurrentLineNumber()
+  replaceLine(lineNumber, headingText(prefix, content))
+}
+
+/**
+ *
+ * @param prefix
+ * @param text
+ */
+export function headingText (prefix: string, text: string) {
+  text = text || ''
+  if (prefix != '') {
+    prefix = prefix + ' '
+  }
+  text = text.replace(/^#{1,5}\s/, '')
+  return prefix + text
 }

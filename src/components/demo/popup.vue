@@ -67,7 +67,7 @@ import { toolbar as tb } from '@/components/eidt/toolbar'
 export default {
 
   setup () {
-    const visible = reactive(false)
+    const visible = reactive(new Boolean(false))
   },
 }
 </script>

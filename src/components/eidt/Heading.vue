@@ -10,15 +10,23 @@
 
 </template>
 <script lang="ts">
-import {heading} from '@/utils/ghost_base_toolbar'
+import { heading } from '@/utils/ghost_base_toolbar'
 
 export default {
-
-  setup () {
-    function head(prefix: string) {
-      console.log(prefix)
-      heading(prefix)
+  props: {
+    hide: {
+      type: Function,
+      default: () => {
+        console.log("after click")
+      }
     }
+  },
+  setup (props) {
+    function head (prefix: string) {
+      console.log(prefix)
+      props.hide()
+    }
+
     return {
       head,
     }
@@ -27,29 +35,35 @@ export default {
 </script>
 
 <style scoped>
-.heading.h1{
+.heading.h1 {
   font-size: 2em;
 }
-.heading.h2{
+
+.heading.h2 {
   font-size: 1.5em;
 }
-.heading.h3{
+
+.heading.h3 {
   font-size: 1.17em;
 }
-.heading.h4{
+
+.heading.h4 {
 }
-.heading.h5{
+
+.heading.h5 {
   font-size: 0.83em;
 }
 
-.heading{
+.heading {
   /*width: 100px;*/
   text-align: center;
 }
-.heading-container{
+
+.heading-container {
   /*width: 100px;*/
   /*background: #67c23a;*/
 }
+
 .heading:hover {
   background-color: #e4ebf5
 }

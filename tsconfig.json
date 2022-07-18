@@ -14,15 +14,21 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "noUnusedLocals": false,
-    "no-multiple-empty-lines": false,
+//    "no-multiple-empty-lines": false,
     "typeRoots": ["node_modules/@types", "global.d.ts"],
     "baseUrl": ".",
     "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"]
-    },
+    }
   },
   "exclude": ["node_modules", "lib", "types", "docs"],
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "compileOnSave": false
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+  ],
+  "compileOnSave": false,
+  "types": ["jest", "node", "jest-extended"]
 }

@@ -149,5 +149,6 @@ export function strikethroughSelect () {
   replaceSelect(strikethroughText(getSelectText()))
 }
 
-
-
+export function heading (perfix:string,text:string) {
+  return perfix+ " " + text
+}

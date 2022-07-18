@@ -53,6 +53,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^8.7.1",
+    "jest": "^28.1.3",
     "typescript": "^4.6.4",
     "vite": "^2.9.8",
     "vue": "^3.2.33",
@@ -64,7 +65,12 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.1",
+    "@types/jest": "^28.1.6",
     "element-plus": "^2.2.9",
+    "jest-config": "^28.1.3",
+    "jest-extended": "^3.0.1",
+    "jtest": "^0.0.1",
+    "ts-jest": "^28.0.7",
     "vue-awesome": "^4.5.0",
     "vue-router": "^4.1.2"
   }

@@ -6,8 +6,7 @@ import {
   replaceLine,
   replaceSelect
 } from '@/utils/ghost_base_utils'
-import { faListOl } from '@fortawesome/free-solid-svg-icons'
-import { isNoEmpty, startWith } from '@/utils/StringUtils'
+import { startWith } from '@/utils/StringUtils'
 
 /**
  * 加粗
@@ -187,19 +186,6 @@ export function horizontal () {
  * 引用
  */
 export function quote () {
-  // var content = getCurrentLineContent()
-  // var lineNumber = getCurrentLineNumber()
-  // replaceLine(lineNumber, '>' + content)
-  // insertAt(lineNumber, 1, '>')
-  // var selectionInfo = getSection()
-  // let startLine = selectionInfo?.startLineNumber
-  // let endLine = selectionInfo?.endLineNumber
-  // // @ts-ignore
-  // let i: number = startLine
-  // // @ts-ignore
-  // for (; i <= endLine; i++) {
-  //   quoteLine(i)
-  // }
   selectLineOp(quoteLine)
 }
 
@@ -216,15 +202,6 @@ export function quoteLine (lineNumber: number) {
  * 无序列表
  */
 export function ul () {
-  // var selectionInfo = getSection()
-  // let startLine = selectionInfo?.startLineNumber
-  // let endLine = selectionInfo?.endLineNumber
-  // // @ts-ignore
-  // let i: number = startLine
-  // // @ts-ignore
-  // for (; i <= endLine; i++) {
-  //   replaceUlLine(i)
-  // }
   selectLineOp(replaceUlLine)
 }
 
@@ -235,23 +212,12 @@ export function ul () {
 export function replaceUlLine (lineNumber: number) {
   var content = getLineContent(lineNumber)
   replaceLine(lineNumber, '- ' + content)
-  // insertAt(lineNumber, 1, '- ')
 }
 
 /**
  * 有序列表
  */
 export function ol () {
-  // var selectionInfo = getSection()
-  // let startLine = selectionInfo?.startLineNumber
-  // let endLine = selectionInfo?.endLineNumber
-  // // @ts-ignore
-  // let i: number = startLine
-  // // @ts-ignore
-  // for (; i <= endLine; i++) {
-  //   replaceOlLine(i)
-  // }
-
   selectLineOp(replaceOlLine)
 }
 
@@ -260,7 +226,6 @@ export function ol () {
  * @param lineNumber
  */
 export function replaceOlLine (lineNumber: number) {
-  // insertAt(lineNumber, 1, '1. ')
   var content = getLineContent(lineNumber)
   replaceLine(lineNumber, '1. ' + content)
 }

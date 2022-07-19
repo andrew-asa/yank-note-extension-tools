@@ -3,9 +3,18 @@ import {
   , faListUl, faListOl, faListCheck,
   faList, faListSquares, faUndo, faUndoAlt,
   faLink, faImage, faCode, faFileCode, faTable,
-  faPercent, faFill,faAngleDown
+  faPercent, faFill, faAngleDown, faAngleRight
 } from '@fortawesome/free-solid-svg-icons'
-import { bold, italic, strikethrough, underline, underlineText } from '@/utils/ghost_base_toolbar'
+import {
+  bold,
+  horizontal,
+  italic, listCheck, listCheckLine, listUnCheck, ol,
+  quote,
+  strikethrough,
+  ul,
+  underline,
+  underlineText
+} from '@/utils/ghost_base_toolbar'
 import Heading from '@/components/eidt/Heading.vue'
 
 let operation = {
@@ -62,32 +71,32 @@ export const toolbar = [{
   name: 'faRulerHorizontal',
   tooltipMsg: '水平线',
   icon: faRulerHorizontal,
-  fn: () => {
-  },
+  fn: horizontal,
 }, {
+  name: 'faAngleRight',
+  tooltipMsg: '引用',
+  icon: faAngleRight,
+  fn: quote,
+},{
   name: 'faListUl',
   tooltipMsg: '无序列表',
   icon: faListUl,
-  fn: () => {
-  },
+  fn: ul,
 }, {
   name: 'faListOl',
   tooltipMsg: '有序列表',
   icon: faListOl,
-  fn: () => {
-  },
+  fn: ol,
 }, {
   name: 'faListCheck',
   tooltipMsg: '已完成任务',
   icon: faListCheck,
-  fn: () => {
-  },
+  fn: listCheck,
 }, {
   name: 'faListSquares',
   tooltipMsg: '未完成的任务',
   icon: faUndo,
-  fn: () => {
-  },
+  fn: listUnCheck,
 }, {
   name: 'faLink',
   tooltipMsg: '链接',

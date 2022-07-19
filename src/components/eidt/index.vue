@@ -32,11 +32,11 @@
         <template #reference>
 
           <el-button link @click="showPopup(item.name)">
-            <font-awesome-icon class="svg-icon" :icon=item.icon ></font-awesome-icon>
+            <font-awesome-icon class="svg-icon" :icon=item.icon></font-awesome-icon>
           </el-button>
-<!--          <el-button link>-->
-<!--            <font-awesome-icon class="svg-icon" :icon=item.icon></font-awesome-icon>-->
-<!--          </el-button>-->
+          <!--          <el-button link>-->
+          <!--            <font-awesome-icon class="svg-icon" :icon=item.icon></font-awesome-icon>-->
+          <!--          </el-button>-->
         </template>
       </el-popover>
       <el-button v-else link @click=item.fn()>
@@ -77,6 +77,7 @@ export default {
       console.log('showPopup ', item)
       let ti = getToolbarItem(item)
       if (ti) {
+        // @ts-ignore
         ti.popupVisible = true
       }
     }
@@ -86,6 +87,7 @@ export default {
       console.log('hidePopup ', item)
       let ti = getToolbarItem(item)
       if (ti) {
+        // @ts-ignore
         ti.popupVisible = false
       }
     }

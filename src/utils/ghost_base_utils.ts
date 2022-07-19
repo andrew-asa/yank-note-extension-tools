@@ -170,6 +170,20 @@ export function isSelectText () {
 }
 
 /**
+ * 获取选中的信息
+ */
+export function getSelectionInfo () {
+  return ctx.editor.getSelectionInfo()
+}
+
+/**
+ * 获取选中的信息
+ */
+export function getSection () {
+  return ctx.editor.getEditor().getSelection()
+}
+
+/**
  * 替换选中的文档
  * @param text
  */

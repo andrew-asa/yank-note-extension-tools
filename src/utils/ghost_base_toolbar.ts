@@ -1,11 +1,13 @@
 import { ctx } from '@yank-note/runtime-api'
 import {
   getCurrentLineContent,
-  getCurrentLineNumber,
-  getSelectText, isSelectText,
+  getCurrentLineNumber, getLineContent, getSection, getSelectionInfo,
+  getSelectText, insertAt, isSelectText,
   replaceLine,
   replaceSelect
 } from '@/utils/ghost_base_utils'
+import { faListOl } from '@fortawesome/free-solid-svg-icons'
+import { isNoEmpty, startWith } from '@/utils/StringUtils'
 
 /**
  * 加粗
@@ -170,4 +172,164 @@ export function headingText (prefix: string, text: string) {
   }
   text = text.replace(/^#{1,5}\s/, '')
   return prefix + text
+}
+
+/**
+ * 水平线
+ */
+export function horizontal () {
+  var content = getCurrentLineContent()
+  var lineNumber = getCurrentLineNumber()
+  replaceLine(lineNumber, content + '\n' + '---')
+}
+
+/**
+ * 引用
+ */
+export function quote () {
+  // var content = getCurrentLineContent()
+  // var lineNumber = getCurrentLineNumber()
+  // replaceLine(lineNumber, '>' + content)
+  // insertAt(lineNumber, 1, '>')
+  // var selectionInfo = getSection()
+  // let startLine = selectionInfo?.startLineNumber
+  // let endLine = selectionInfo?.endLineNumber
+  // // @ts-ignore
+  // let i: number = startLine
+  // // @ts-ignore
+  // for (; i <= endLine; i++) {
+  //   quoteLine(i)
+  // }
+  selectLineOp(quoteLine)
+}
+
+/**
+ * 单行引用
+ * @param lineNumber
+ */
+export function quoteLine (lineNumber: number) {
+  var content = getLineContent(lineNumber)
+  replaceLine(lineNumber, '> ' + content)
+}
+
+/**
+ * 无序列表
+ */
+export function ul () {
+  // var selectionInfo = getSection()
+  // let startLine = selectionInfo?.startLineNumber
+  // let endLine = selectionInfo?.endLineNumber
+  // // @ts-ignore
+  // let i: number = startLine
+  // // @ts-ignore
+  // for (; i <= endLine; i++) {
+  //   replaceUlLine(i)
+  // }
+  selectLineOp(replaceUlLine)
+}
+
+/**
+ * 替换无序列表一行
+ * @param lineNumber
+ */
+export function replaceUlLine (lineNumber: number) {
+  var content = getLineContent(lineNumber)
+  replaceLine(lineNumber, '- ' + content)
+  // insertAt(lineNumber, 1, '- ')
+}
+
+/**
+ * 有序列表
+ */
+export function ol () {
+  // var selectionInfo = getSection()
+  // let startLine = selectionInfo?.startLineNumber
+  // let endLine = selectionInfo?.endLineNumber
+  // // @ts-ignore
+  // let i: number = startLine
+  // // @ts-ignore
+  // for (; i <= endLine; i++) {
+  //   replaceOlLine(i)
+  // }
+
+  selectLineOp(replaceOlLine)
+}
+
+/**
+ * 替换有序列表一行
+ * @param lineNumber
+ */
+export function replaceOlLine (lineNumber: number) {
+  // insertAt(lineNumber, 1, '1. ')
+  var content = getLineContent(lineNumber)
+  replaceLine(lineNumber, '1. ' + content)
+}
+
+/**
+ * 任务标记完成
+ */
+export function listCheck () {
+  selectLineOp(listCheckLine)
+}
+
+export const checkPrefix = '- [x] '
+export const uncheckPrefix = '- [ ] '
+
+/**
+ * 已经完成任务
+ * @param lineNumber
+ */
+export function listCheckLine (lineNumber: number) {
+  let content: string = getLineContent(lineNumber)
+  replaceLine(lineNumber, createCheckContent(content))
+}
+
+export function createCheckContent (content: string): string {
+  if (startWith(content, uncheckPrefix)) {
+    content = content.replace(uncheckPrefix, checkPrefix)
+  } else {
+    content = checkPrefix + content
+  }
+  return content
+}
+
+/**
+ * 任务没有完成
+ */
+export function listUnCheck () {
+  selectLineOp(listUnCheckLine)
+}
+
+/**
+ * 任务没有完成
+ * @param lineNumber
+ */
+export function listUnCheckLine (lineNumber: number) {
+  let content: string = getLineContent(lineNumber)
+  replaceLine(lineNumber, createUnCheckContent(content))
+}
+
+export function createUnCheckContent(content:string):string{
+  if (startWith(content, checkPrefix)) {
+    content = content.replace(checkPrefix, uncheckPrefix)
+  } else {
+    content = uncheckPrefix + content
+  }
+  return content
+}
+
+/**
+ * 选中逐行进行操作
+ * @param op
+ */
+export function selectLineOp (op: Function) {
+  var selectionInfo = getSection()
+  let startLine = selectionInfo?.startLineNumber
+  let endLine = selectionInfo?.endLineNumber
+  // @ts-ignore
+  let i: number = startLine
+  // @ts-ignore
+  for (; i <= endLine; i++) {
+    op(i)
+  }
 }

@@ -34,6 +34,7 @@
     "unlink-extension": "link-yn-extension --unlink",
     "dev": "vite build --watch",
     "build": "vue-tsc --noEmit && vite build",
+    "onlybuild": "vite build",
     "lint": "vue-tsc --noEmit && yarn run eslint '{src,__tests__}/**/*.{js,ts,tsx,vue}'",
     "version": "conventional-changelog -t extension-sublime-merge- --commit-path . -p angular -i CHANGELOG.md -s && npm run tag-version",
     "tag-version": "git add . && git commit -m 'chore(release): bump extension-sublime-merge version' && git tag extension-sublime-merge-$npm_package_version",
@@ -72,6 +73,7 @@
     "jtest": "^0.0.1",
     "ts-jest": "^28.0.7",
     "vue-awesome": "^4.5.0",
-    "vue-router": "^4.1.2"
+    "vue-router": "^4.1.2",
+    "vuex": "^4.0.2"
   }
 }

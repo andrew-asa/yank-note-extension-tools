@@ -8,6 +8,8 @@ import {
   duplicateLine, moveLineDown, moveLineUp
 } from '@/utils/ghost_base_utils'
 import { triggerEditPanel } from '@/markdown_edit'
+import { toggleToolbar } from '@/utils/ghost_base_toolbar'
+import store from '@/render/store'
 
 export default function () {
   registerPlugin({
@@ -15,16 +17,19 @@ export default function () {
     register: ctx => {
       // 添加状态栏菜单
       ctx.statusBar.tapMenus(menus => {
-        menus[EXTENSION_NAME+ 'plugin-fast-operation'] = {
+        menus[EXTENSION_NAME + 'plugin-fast-operation'] = {
           id: EXTENSION_NAME + 'plugin-fast-operation',
           position: 'left',
           title: '编辑',
           list: [{
             id: EXTENSION_NAME + 'edit',
             type: 'normal',
-            title: '编辑',
-            onClick: triggerEditPanel
-          },{
+            title: '显示工具栏',
+            checked: store.state.showToolbar,
+            onClick: () => {
+              toggleToolbar()
+            }
+          }, {
             id: EXTENSION_NAME + 'plugin-delete-after',
             type: 'normal',
             title: '删除光标后的行',

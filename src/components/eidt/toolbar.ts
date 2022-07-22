@@ -6,9 +6,9 @@ import {
   faPercent, faFill, faAngleDown, faAngleRight
 } from '@fortawesome/free-solid-svg-icons'
 import {
-  bold,
+  bold, code, embedCode, formula,
   horizontal,
-  italic, listCheck, listCheckLine, listUnCheck, ol,
+  italic, link, linkImg, listCheck, listCheckLine, listUnCheck, ol,
   quote,
   strikethrough,
   ul,
@@ -101,26 +101,22 @@ export const toolbar = [{
   name: 'faLink',
   tooltipMsg: '链接',
   icon: faLink,
-  fn: () => {
-  },
+  fn: link,
 }, {
   name: 'faImage',
   tooltipMsg: '图片',
   icon: faImage,
-  fn: () => {
-  },
+  fn: linkImg,
 }, {
   name: 'faCode',
   tooltipMsg: '内嵌代码',
   icon: faCode,
-  fn: () => {
-  },
+  fn: embedCode,
 }, {
   name: 'faFileCode',
   tooltipMsg: '代码块',
   icon: faFileCode,
-  fn: () => {
-  },
+  fn:code,
 }, {
   name: 'faTable',
   tooltipMsg: '表格',
@@ -131,8 +127,7 @@ export const toolbar = [{
   name: 'faPercent',
   tooltipMsg: '公式',
   icon: faPercent,
-  fn: () => {
-  },
+  fn: formula,
 }, {
   name: 'faFill',
   tooltipMsg: '颜色',

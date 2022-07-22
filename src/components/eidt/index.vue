@@ -1,17 +1,5 @@
 <template>
-  <div id="toolbar">
-    <!--      <el-tooltip v-for="item in toolbars"-->
-    <!--                  class="box-item"-->
-    <!--                  effect="light"-->
-    <!--                  :content=item.tooltipMsg-->
-    <!--                  placement="bottom-start"-->
-    <!--      >-->
-    <!--        <el-button link @click=item.fn()>-->
-    <!--          <font-awesome-icon class="svg-icon" :icon=item.icon />-->
-    <!--        </el-button>-->
-    <!--      </el-tooltip>-->
-
-
+  <div id="toolbar" v-show="showToolbar">
     <el-tooltip v-for="item in toolbars"
                 class="box-item"
                 effect="light"
@@ -34,9 +22,6 @@
           <el-button link @click="showPopup(item.name)">
             <font-awesome-icon class="svg-icon" :icon=item.icon></font-awesome-icon>
           </el-button>
-          <!--          <el-button link>-->
-          <!--            <font-awesome-icon class="svg-icon" :icon=item.icon></font-awesome-icon>-->
-          <!--          </el-button>-->
         </template>
       </el-popover>
       <el-button v-else link @click=item.fn()>
@@ -46,20 +31,25 @@
   </div>
 </template>
 <script lang="ts">
-import { reactive } from 'vue'
+import { reactive ,toRefs} from 'vue'
 import { toolbar as tb } from './toolbar'
 import { ElButton } from 'element-plus'
 import { faBold } from '@fortawesome/free-solid-svg-icons'
+import { useStore } from 'vuex'
 
 export default {
 
   setup () {
+    const store = useStore()
+    const { showToolbar } = toRefs<AppState>(store.state)
+
     for (let entry of tb) {
       if (entry.popupUp) {
         // @ts-ignore
         entry.popupVisible = false
       }
     }
+
     const toolbars = reactive(tb)
 
     function getToolbarItem (name: string) {
@@ -74,7 +64,7 @@ export default {
 
     function showPopup (item: string) {
       // toolbars[item].popupVisible = true
-      console.log('showPopup ', item)
+      // console.log('showPopup ', item)
       let ti = getToolbarItem(item)
       if (ti) {
         // @ts-ignore
@@ -84,7 +74,7 @@ export default {
 
     function hidePopup (item: string) {
       // toolbars[item].popupVisible = true
-      console.log('hidePopup ', item)
+      // console.log('hidePopup ', item)
       let ti = getToolbarItem(item)
       if (ti) {
         // @ts-ignore
@@ -93,6 +83,7 @@ export default {
     }
 
     return {
+      showToolbar,
       toolbars,
       showPopup,
       hidePopup

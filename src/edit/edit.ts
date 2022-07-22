@@ -2,12 +2,14 @@ import { createApp } from 'vue'
 import App from '@/components/Edit.vue'
 import { getExtensionBasePath, registerPlugin } from '@yank-note/runtime-api'
 import { start } from "@/render/startup/startup";
+import store from '@/render/store'
 const extensionId = __EXTENSION_ID__
 
 function startInternal (id: string) {
   installCss()
   const app = createApp(App)
   start(app)
+  app.use(store)
   app.mount(id)
 }
 

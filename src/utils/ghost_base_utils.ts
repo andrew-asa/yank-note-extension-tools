@@ -341,4 +341,13 @@ export function createI18n (key: string, cn: string, en: string) {
   })
 }
 
+/**
+ * resize
+ */
+export function global_resize () {
+  try {
 
+  } catch (e) {
+
+  }
+}

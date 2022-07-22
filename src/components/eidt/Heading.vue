@@ -23,7 +23,7 @@ export default {
   },
   setup (props) {
     function head (prefix: string) {
-      console.log(prefix)
+      // console.log(prefix)
       props.hide()
       heading(prefix)
     }

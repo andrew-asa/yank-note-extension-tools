@@ -4,9 +4,11 @@ import {
   getCurrentLineNumber, getLineContent, getSection, getSelectionInfo,
   getSelectText, insertAt, isSelectText,
   replaceLine,
-  replaceSelect
+  replaceSelect,
+  global_resize
 } from '@/utils/ghost_base_utils'
-import { startWith } from '@/utils/StringUtils'
+import { isEmpty, startWith } from '@/utils/StringUtils'
+import store from '@/render/store'
 
 /**
  * 加粗
@@ -274,7 +276,7 @@ export function listUnCheckLine (lineNumber: number) {
   replaceLine(lineNumber, createUnCheckContent(content))
 }
 
-export function createUnCheckContent(content:string):string{
+export function createUnCheckContent (content: string): string {
   if (startWith(content, checkPrefix)) {
     content = content.replace(checkPrefix, uncheckPrefix)
   } else {
@@ -297,4 +299,79 @@ export function selectLineOp (op: Function) {
   for (; i <= endLine; i++) {
     op(i)
   }
+}
+
+/**
+ * 插入链接
+ */
+export function link () {
+  var text: string = getSelectText()
+  replaceSelect(buildLinkText(text))
+}
+
+export const DEFAULT_LINk = 'https://url/'
+
+export function buildLinkText (content: string) {
+  return '[' + content + ']' + '('+DEFAULT_LINk+ ')'
+}
+
+/**
+ * 插入图片链接
+ */
+export function linkImg () {
+  replaceSelect(buildLinkImgText(getSelectText()))
+}
+
+export function buildLinkImgText (content: string) {
+  return '![' + content + ']' + '('+DEFAULT_LINk+ ')'
+}
+
+/**
+ * 内嵌代码
+ */
+export function embedCode () {
+  replaceSelect(buildEmbedCodeText(getSelectText()))
+}
+
+export function buildEmbedCodeText (content: string) {
+  return '`' + content + '`'
+}
+
+/**
+ * 插入代码块
+ */
+export function code () {
+  replaceSelect(buildCodeText(getSelectText()))
+}
+
+export function buildCodeText (content: string) {
+  return '\n```\n' + content + '\n```\n'
+}
+
+/**
+ * 插入公式
+ */
+export function formula () {
+  replaceSelect(buildFormulaText(getSelectText()))
+}
+
+/**
+ * 默认插入的公式
+ */
+export const DEFAULT_FORMULA = 'E = mc^2'
+
+export function buildFormulaText (content: string) {
+  if (isEmpty(content)) {
+    content = DEFAULT_FORMULA
+  }
+  return '\n```math\n' + content + '\n```\n'
+}
+
+/**
+ * 工具类的显示以及隐藏
+ * @param visible
+ */
+export function toggleToolbar (visible?: boolean) {
+  store.commit('setShowToolbar', typeof visible === 'boolean' ? visible : !store.state.showToolbar)
+  global_resize()
 }

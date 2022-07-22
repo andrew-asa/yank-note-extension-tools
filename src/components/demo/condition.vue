@@ -71,7 +71,7 @@ export default {
 
     function showPopup (item:string) {
       // toolbars[item].popupVisible = true
-      console.log("showPopup ",item)
+      // console.log("showPopup ",item)
       let ti = getToolbarItem(item)
       if (ti) {
         ti.popupVisible = true

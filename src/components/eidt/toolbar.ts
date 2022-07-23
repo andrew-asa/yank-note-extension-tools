@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import {
   bold, code, embedCode, formula,
-  horizontal,
+  horizontal, insertTable,
   italic, link, linkImg, listCheck, listCheckLine, listUnCheck, ol,
   quote,
   strikethrough,
@@ -121,8 +121,7 @@ export const toolbar = [{
   name: 'faTable',
   tooltipMsg: '表格',
   icon: faTable,
-  fn: () => {
-  },
+  fn: insertTable,
 }, {
   name: 'faPercent',
   tooltipMsg: '公式',
@@ -130,7 +129,7 @@ export const toolbar = [{
   fn: formula,
 }, {
   name: 'faFill',
-  tooltipMsg: '颜色',
+  tooltipMsg: '背景颜色',
   icon: faFill,
   fn: () => {
   },

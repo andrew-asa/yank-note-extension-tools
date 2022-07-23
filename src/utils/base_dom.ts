@@ -27,3 +27,14 @@ export function createIdElement (tag: string, id: string) {
 export function existIdElement (id: string) {
   return getElementById(id) != null
 }
+
+// export function getChildrenAttr (select,attr) {
+//   var childrens = $(select).children()
+//   var cl = childrens.length
+//   var ret = []
+//   for (let i = 0; i < cl; i++) {
+//     var c = childrens[i]
+//     ret.push($(c).attr(attr))
+//   }
+//   return ret
+// }

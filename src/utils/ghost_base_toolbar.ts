@@ -5,7 +5,7 @@ import {
   getSelectText, insertAt, isSelectText,
   replaceLine,
   replaceSelect,
-  global_resize
+  global_resize, insert
 } from '@/utils/ghost_base_utils'
 import { isEmpty, startWith } from '@/utils/StringUtils'
 import store from '@/render/store'
@@ -312,7 +312,7 @@ export function link () {
 export const DEFAULT_LINk = 'https://url/'
 
 export function buildLinkText (content: string) {
-  return '[' + content + ']' + '('+DEFAULT_LINk+ ')'
+  return '[' + content + ']' + '(' + DEFAULT_LINk + ')'
 }
 
 /**
@@ -323,7 +323,7 @@ export function linkImg () {
 }
 
 export function buildLinkImgText (content: string) {
-  return '![' + content + ']' + '('+DEFAULT_LINk+ ')'
+  return '![' + content + ']' + '(' + DEFAULT_LINk + ')'
 }
 
 /**
@@ -374,4 +374,16 @@ export function buildFormulaText (content: string) {
 export function toggleToolbar (visible?: boolean) {
   store.commit('setShowToolbar', typeof visible === 'boolean' ? visible : !store.state.showToolbar)
   global_resize()
+}
+
+export const DEFAULT_TABLE_DEMO =
+  '| 标题1 | 标题2 | 标题3 |\n' +
+  '| :-- | :-- | :-- |\n' +
+  '| 1 | 2 | 3 |'
+
+/**
+ * 插入表格
+ */
+export function insertTable () {
+  insert(DEFAULT_TABLE_DEMO)
 }

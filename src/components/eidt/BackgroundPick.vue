@@ -1,22 +1,23 @@
 <template>
- <color-pick @sure="sure"></color-pick>
+  <color-pick @sure="sure"></color-pick>
 </template>
 
 <script>
 import ColorPick from './ColorPick.vue'
+import { backgroundColor, heading } from '@/utils/ghost_base_toolbar'
+import { run_no_exception } from '@/utils/ghost_base_utils'
+
 export default {
   components: { ColorPick },
-  methods:{
-    sure(value){
-      console.log(value)
+  methods: {
+    sure (value) {
+      run_no_exception(backgroundColor,value)
       // 向上传递事件
-      this.$emit('sure',value)
+      this.$emit('sure', value)
     }
   },
-  setup(props){
-    return {
-
-    }
+  setup (props) {
+    return {}
   }
 }
 </script>

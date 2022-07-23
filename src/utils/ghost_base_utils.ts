@@ -351,3 +351,16 @@ export function global_resize () {
 
   }
 }
+
+/**
+ * 执行错误了也要忽略
+ * @param fn
+ * @param paras
+ */
+export function run_no_exception (fn: Function, ...paras) {
+  try {
+    fn(paras)
+  } catch (e){
+
+  }
+}

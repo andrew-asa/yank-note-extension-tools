@@ -7,8 +7,9 @@ import {
   replaceSelect,
   global_resize, insert
 } from '@/utils/ghost_base_utils'
-import { isEmpty, startWith } from '@/utils/StringUtils'
+import { isEmpty, isNoEmpty, startWith, testStr } from '@/utils/StringUtils'
 import store from '@/render/store'
+import { htmlStrToSpanDom } from '@/utils/base_dom'
 
 /**
  * 加粗
@@ -386,4 +387,44 @@ export const DEFAULT_TABLE_DEMO =
  */
 export function insertTable () {
   insert(DEFAULT_TABLE_DEMO)
+}
+
+export function backgroundColor (color: string) {
+  replaceSelect(buildBackgroundColorText(getSelectText(),color))
+  // console.log(color)
+}
+
+export const TD_BACKGROUND_COLOR_TEST = /^\s*<td bgcolor=[^>]*>[\s\S]*<\/td>\s*$/
+export const TD_REG = /<td[^>]*>([\s\S]*?)<\/td>/
+
+export function parseTdContent (content: string) {
+  if (isNoEmpty(content)) {
+    var items = content.match(TD_REG)
+    if (items && items.length > 1) {
+      return items[1]
+    }
+  }
+  return ''
+}
+
+/**
+ * 是否是内置的背景颜色文本
+ * @param content
+ */
+export function isInnerBackgroundColorText (content: string) {
+  return testStr(content, TD_BACKGROUND_COLOR_TEST)
+}
+
+export function buildBackgroundColorText (content: string, colorStr: string) {
+  // 原先就有背景色
+  // var rc = content
+  // if (isInnerBackgroundColorText(content)) {
+  //   rc = parseTdContent(content)
+  // }
+  // return '<td bgcolor="' + colorStr + '">' + rc + '</td>'
+  var dom = htmlStrToSpanDom(content)
+  // @ts-ignore
+  dom.style.background=colorStr
+  // @ts-ignore
+  return dom?.outerHTML
 }

@@ -38,3 +38,15 @@ export function existIdElement (id: string) {
 //   }
 //   return ret
 // }
+
+export function htmlStrToSpanDom (str) {
+  let placeholder = document.createElement('div');
+  placeholder.innerHTML = str;
+  if (placeholder?.firstChild?.nodeType == 3) {
+    let t = document.createElement('span')
+    t.innerHTML = str
+    return t
+  } else {
+    return placeholder.firstChild
+  }
+}

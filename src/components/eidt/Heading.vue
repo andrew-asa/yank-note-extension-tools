@@ -1,5 +1,5 @@
 <template>
-  <div class="heading-container" v-on:mouseleave=mouseleave>
+  <div class="heading-container">
     <div class="heading h1" @click="sure('#')">标题1</div>
     <div class="heading h2" @click="sure('##')">标题2</div>
     <div class="heading h3" @click="sure('###')">标题3</div>
@@ -11,6 +11,7 @@
 </template>
 <script lang="ts">
 import { heading } from '@/utils/ghost_base_toolbar'
+import { run_no_exception } from '@/utils/ghost_base_utils'
 
 export default {
   props: {
@@ -26,6 +27,7 @@ export default {
       console.log(value)
       // 向上传递事件
       this.$emit('sure',value)
+      run_no_exception(heading,value)
     }
   },
   setup (props) {

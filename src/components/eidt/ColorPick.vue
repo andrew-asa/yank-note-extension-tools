@@ -5,8 +5,8 @@
               @click="selectColorItem(item)" @dblclick="sure"></el-tag>
     </div>
     <div class="base_color_input_root">
-<!--      <el-tag class="select_result" :color=selectColor hit="true"></el-tag>-->
-      <el-color-picker v-model="selectColor" @change="pickColor($event)"/>
+      <el-tag class="select_result" :color=selectColor hit="true"></el-tag>
+<!--      <el-color-picker v-model="selectColor" @change="pickColor($event)"/>-->
       <el-input class="color_input" v-model="colorInput" placeholder="" @input="inputColorChange(value)"></el-input>
       <el-button class="color_sure" @click="sure()">确认</el-button>
     </div>

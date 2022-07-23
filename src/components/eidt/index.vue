@@ -33,9 +33,14 @@
 import { reactive, toRefs } from 'vue'
 import { toolbar as tb } from './toolbar'
 import { useStore } from 'vuex'
-
+import Heading from '@/components/eidt/Heading.vue'
+import BackgroundPick from '@/components/eidt/BackgroundPick.vue'
+import { AppState } from '@/render/store'
 export default {
-  components: {},
+  components: {
+    "Heading": Heading,
+    "BackgroundPick": BackgroundPick,
+  },
   setup () {
     const store = useStore()
     const { showToolbar } = toRefs<AppState>(store.state)

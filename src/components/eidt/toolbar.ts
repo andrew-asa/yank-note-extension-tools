@@ -15,9 +15,6 @@ import {
   underline,
   underlineText
 } from '@/utils/ghost_base_toolbar'
-import Heading from '@/components/eidt/Heading.vue'
-import BackgroundPick from '@/components/eidt/BackgroundPick.vue'
-
 let operation = {
   bold:bold,
   italic:italic,
@@ -64,7 +61,7 @@ export const toolbar = [{
   tooltipMsg: '标题',
   icon: faHeading,
   popupUp: true,
-  popupPane: Heading,
+  popupPane: "Heading",
   popupPaneCls: 'heading-popup',
   fn: () => {
   },
@@ -133,7 +130,7 @@ export const toolbar = [{
   tooltipMsg: '背景颜色',
   icon: faFill,
   popupUp: true,
-  popupPane: BackgroundPick,
+  popupPane: "BackgroundPick",
   fn: () => {
   },
 }]

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import edit_index from '@/components/Edit.vue'
-import edit_base_color_pick from '@/components/eidt/BaseColorPick.vue'
+import edit_color_pick from '@/components/eidt/ColorPick.vue'
+import edit_background_color_pick from '@/components/eidt/BackgroundPick.vue'
 import demo_popup from '@/components/demo/popup.vue'
 import demo_popup2 from '@/components/demo/popup2.vue'
 import demo_show from '@/components/demo/show.vue'
@@ -17,9 +18,13 @@ const routes = [
     name: 'edit_index',
     component: edit_index
   }, {
-    path: '/edit/edit_base_color_pick',
-    name: 'edit_base_color_pick',
-    component: edit_base_color_pick
+    path: '/edit/edit_color_pick',
+    name: 'edit_color_pick',
+    component: edit_color_pick
+  }, {
+    path: '/edit/edit_background_color_pick',
+    name: 'edit_background_color_pick',
+    component: edit_background_color_pick
   }, {
     path: '/demo/popup',
     name: 'demo_popup',

@@ -14,11 +14,10 @@
                   width="auto"
                   :visible=item.popupVisible
       >
-        <component :is=item.popupPane :hide="function() {
-        hidePopup(item.name)
-      }"></component>
+        <component :is=item.popupPane @mouseleave="()=>hidePopup(item.name)"
+                   @sure="()=>hidePopup(item.name)"></component>
+        <!--        <component is=Heading @mouseleave="()=>hidePopup(item.name)" @sure="()=>hidePopup(item.name)"></component>-->
         <template #reference>
-
           <el-button link @click="showPopup(item.name)">
             <font-awesome-icon class="svg-icon" :icon=item.icon></font-awesome-icon>
           </el-button>
@@ -31,14 +30,12 @@
   </div>
 </template>
 <script lang="ts">
-import { reactive ,toRefs} from 'vue'
+import { reactive, toRefs } from 'vue'
 import { toolbar as tb } from './toolbar'
-import { ElButton } from 'element-plus'
-import { faBold } from '@fortawesome/free-solid-svg-icons'
 import { useStore } from 'vuex'
 
 export default {
-
+  components: {},
   setup () {
     const store = useStore()
     const { showToolbar } = toRefs<AppState>(store.state)

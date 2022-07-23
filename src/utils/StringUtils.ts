@@ -2,7 +2,6 @@
  * 字符串是否为空
  * @param str
  */
-import { isRegExp } from '@yank-note/runtime-api/types/types/third-party/lodash-es'
 
 export function isEmpty (str: string | undefined | null) {
   return str == null || str == undefined || str.length == 0
@@ -38,6 +37,11 @@ export function startWith (str: string, start: string) {
 export const COLOR_REG = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/
 export const COLOR_REG_STR = '^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$'
 
+/**
+ * 字符串判断是否符合某个正则表达式
+ * @param str
+ * @param regStr
+ */
 export function testStr (str: string, regStr: string | RegExp) {
   let reg: RegExp
   if (regStr instanceof RegExp) {

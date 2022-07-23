@@ -16,6 +16,7 @@ import {
   underlineText
 } from '@/utils/ghost_base_toolbar'
 import Heading from '@/components/eidt/Heading.vue'
+import BackgroundPick from '@/components/eidt/BackgroundPick.vue'
 
 let operation = {
   bold:bold,
@@ -131,6 +132,8 @@ export const toolbar = [{
   name: 'faFill',
   tooltipMsg: '背景颜色',
   icon: faFill,
+  popupUp: true,
+  popupPane: BackgroundPick,
   fn: () => {
   },
 }]

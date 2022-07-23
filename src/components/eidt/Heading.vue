@@ -1,11 +1,11 @@
 <template>
   <div class="heading-container" v-on:mouseleave=mouseleave>
-    <div class="heading h1" @click="head('#')">标题1</div>
-    <div class="heading h2" @click="head('##')">标题2</div>
-    <div class="heading h3" @click="head('###')">标题3</div>
-    <div class="heading h4" @click="head('####')">标题4</div>
-    <div class="heading h5" @click="head('#####')">标题5</div>
-    <div class="heading" @click="head('')">正文</div>
+    <div class="heading h1" @click="sure('#')">标题1</div>
+    <div class="heading h2" @click="sure('##')">标题2</div>
+    <div class="heading h3" @click="sure('###')">标题3</div>
+    <div class="heading h4" @click="sure('####')">标题4</div>
+    <div class="heading h5" @click="sure('#####')">标题5</div>
+    <div class="heading" @click="sure('')">正文</div>
   </div>
 
 </template>
@@ -21,21 +21,28 @@ export default {
       }
     }
   },
+  methods:{
+    sure(value){
+      console.log(value)
+      // 向上传递事件
+      this.$emit('sure',value)
+    }
+  },
   setup (props) {
-    function head (prefix: string) {
-      // console.log(prefix)
-      props.hide()
-      heading(prefix)
-    }
-
-    function mouseleave () {
-      // console.log("mouseleave")
-      props.hide()
-    }
+    // function head (prefix: string) {
+    //   // console.log(prefix)
+    //   props.hide()
+    //   heading(prefix)
+    // }
+    //
+    // function mouseleave () {
+    //   // console.log("mouseleave")
+    //   props.hide()
+    // }
 
     return {
-      head,
-      mouseleave
+      // head,
+      // mouseleave
     }
   },
 }

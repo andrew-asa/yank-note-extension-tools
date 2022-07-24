@@ -208,51 +208,6 @@ export function getSelectText () {
   return ctx.editor.getEditor().getModel().getValueInRange(selection)
 }
 
-/**
- * 粘贴板图片ocr
- */
-export function clipboardOcr () {
-  var sell = 'source ~/.bash_profile\n' +
-    'conda activate  paddleenv\n' +
-    'cd /Users/andrew_asa/Documents/code/github/andrew-asa/exec/python\n' +
-    'result=`python - <<EOF\n' +
-    'from python_tools.ocr.img_ocr import ImageOcr\n' +
-    'ocr = ImageOcr()\n' +
-    'ocr.ocr_clipboard_img()\n' +
-    'EOF` \n ' +
-    'echo $result \n' +
-    'exit'
-  runShellCode(sell)
-}
-
-/**
- * 表格ocr识别
- */
-export function clipboardTableOcr () {
-  var sell = 'source ~/.bash_profile\n' +
-    'conda activate  paddleenv\n' +
-    'cd /Users/andrew_asa/Documents/code/github/andrew-asa/exec/python\n' +
-    'result=`python - <<EOF\n' +
-    'from python_tools.ocr.img_ocr import ImageOcr\n' +
-    'from python_tools.utils.ClipboardUtils import ClipboardUtils\n' +
-    'from python_tools.utils.StringUtils import StringUtils\n' +
-    'ocr = ImageOcr()\n' +
-    'content = ocr.ocr_clipboard_img(print_in_console=False,copy_to_clipboard=False,colSequence=" | ",rowSequence=" |\\n| ")\n' +
-    'content = "| " + content + " |"\n' +
-    'ClipboardUtils.copyToClipboard(content)\n' +
-    'print("--ocr result --")\n' +
-    'print(content)\n' +
-    'print("--ocr result --")\n' +
-    'EOF` \n ' +
-    'echo $result \n' +
-    'exit'
-  // 'exit'
-  runShellCode(sell)
-  // asynRunShellCode(sell,function (echo){
-  //     ctx.ui.useToast().show('info', 'OCR识别完成', 2000)
-  //     // console.log(echo)
-  // });
-}
 
 /**
  * 删除文档

@@ -1,8 +1,7 @@
 import { registerPlugin } from '@yank-note/runtime-api'
 import { EXTENSION_NAME } from '@/utils/base_constant'
 import {
-  clipboardOcr,
-  clipboardTableOcr,
+
   deleteAfter,
   deleteOutLinkLocationImage,
   duplicateLine, moveLineDown, moveLineUp
@@ -43,21 +42,23 @@ export default function () {
             onClick: () => {
               deleteOutLinkLocationImage()
             }
-          }, {
-            id: EXTENSION_NAME + 'plugin-fast-orc',
-            type: 'normal',
-            title: '粘贴板图片OCR',
-            onClick: () => {
-              clipboardOcr()
-            }
-          }, {
-            id: EXTENSION_NAME + 'plugin-fast-table-ocr-md',
-            type: 'normal',
-            title: '表格OCR',
-            onClick: () => {
-              clipboardTableOcr()
-            }
-          }, {
+          },
+          //   {
+          //   id: EXTENSION_NAME + 'plugin-fast-orc',
+          //   type: 'normal',
+          //   title: '粘贴板图片OCR',
+          //   onClick: () => {
+          //     clipboardOcr()
+          //   }
+          // }, {
+          //   id: EXTENSION_NAME + 'plugin-fast-table-ocr-md',
+          //   type: 'normal',
+          //   title: '表格OCR',
+          //   onClick: () => {
+          //     clipboardTableOcr()
+          //   }
+          // },
+            {
             id: EXTENSION_NAME + 'plugin-fast-operation-duplicate-line',
             type: 'normal',
             title: '复制一行',

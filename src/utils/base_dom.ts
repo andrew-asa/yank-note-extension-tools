@@ -1,3 +1,5 @@
+import { nodeModule } from '@yank-note/runtime-api/types/types/renderer/support/env'
+
 export function getElementById (id: string): HTMLElement | null {
   return document.getElementById(id)
 }
@@ -40,13 +42,23 @@ export function existIdElement (id: string) {
 // }
 
 export function htmlStrToSpanDom (str) {
-  let placeholder = document.createElement('div');
-  placeholder.innerHTML = str;
-  if (placeholder?.firstChild?.nodeType == 3) {
+  let placeholder = document.createElement('div')
+  placeholder.innerHTML = str
+  // 文本node直接用一个span包装
+  // if (placeholder?.firstChild?.nodeType == 3) {
+  if (haveNoStyleAttr(placeholder?.firstChild)) {
     let t = document.createElement('span')
     t.innerHTML = str
     return t
   } else {
     return placeholder.firstChild
   }
+}
+
+export function haveStyleAttr (node) {
+  return node ? (node.style ? true : false) : false
+}
+
+export function haveNoStyleAttr (node) {
+  return !haveStyleAttr(node)
 }

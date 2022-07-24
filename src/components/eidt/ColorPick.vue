@@ -7,8 +7,8 @@
     <div class="base_color_input_root">
       <el-tag class="select_result" :color=selectColor hit="true"></el-tag>
 <!--      <el-color-picker v-model="selectColor" @change="pickColor($event)"/>-->
-      <el-input class="color_input" v-model="colorInput" placeholder="" @input="inputColorChange(value)"></el-input>
-      <el-button class="color_sure" @click="sure()">确认</el-button>
+      <el-input class="color_input" v-model="colorInput" placeholder="" @input=inputColorChange></el-input>
+      <el-button class="color_sure" @click="sure()" v-show="showSureButton">确认</el-button>
     </div>
 
 
@@ -21,11 +21,27 @@ import { ref } from 'vue'
 import { COLOR_REG, testStr } from '@/utils/StringUtils'
 
 export default {
-  props: {},
+  props: {
+    showSureButton:{
+      type: Boolean,
+      default: true
+    }
+  },
   methods:{
     sure(){
       // console.log("pick color:"+this.colorInput)
       this.$emit('sure', this.colorInput)
+    },
+    selectColorItem (color) {
+      this.selectColor = color
+      this.colorInput = color
+      this.$emit('selectColor', color)
+    },
+    inputColorChange(cv){
+      if (this.isColorStr(this.colorInput)) {
+        this.selectColor = this.colorInput
+        this.$emit('selectColor', this.selectColor)
+      }
     }
   },
   setup (props) {
@@ -45,24 +61,11 @@ export default {
       colorInput.value = color
     }
 
-    function selectColorItem (color) {
-      selectColor.value = color
-      colorInput.value = color
-    }
-
-    function  inputColorChange(value) {
-      if (isColorStr(colorInput.value)) {
-        selectColor.value = colorInput.value
-      }
-    }
-
     return {
       baseColor,
       selectColor,
-      pickColor,
+      isColorStr,
       colorInput,
-      selectColorItem,
-      inputColorChange,
     }
   },
 }

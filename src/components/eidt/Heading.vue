@@ -7,7 +7,6 @@
     <div class="heading h5" @click="sure('#####')">标题5</div>
     <div class="heading" @click="sure('')">正文</div>
   </div>
-
 </template>
 <script lang="ts">
 import { heading } from '@/utils/ghost_base_toolbar'
@@ -24,7 +23,7 @@ export default {
   },
   methods:{
     sure(value){
-      console.log(value)
+      // console.log(value)
       // 向上传递事件
       this.$emit('sure',value)
       run_no_exception(heading,value)

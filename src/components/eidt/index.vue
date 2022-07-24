@@ -9,14 +9,16 @@
 
       <el-popover v-if=item.popupUp
                   placement="bottom"
-                  trigger="click"
+                  trigger="hover"
                   :popper-class=item.popupPaneCls
                   width="auto"
-                  :visible=item.popupVisible
+
       >
-        <component :is=item.popupPane @mouseleave="()=>hidePopup(item.name)"
-                   @sure="()=>hidePopup(item.name)"></component>
-        <!--        <component is=Heading @mouseleave="()=>hidePopup(item.name)" @sure="()=>hidePopup(item.name)"></component>-->
+<!--        <component :is=item.popupPane @mouseleave="()=>hidePopup(item.name)"-->
+<!--                   @sure="()=>hidePopup(item.name)"></component>-->
+
+        <component :is=item.popupPane
+                   @sure="()=>hidePopupByHand(item.name)"></component>
         <template #reference>
           <el-button link @click="showPopup(item.name)">
             <font-awesome-icon class="svg-icon" :icon=item.icon></font-awesome-icon>
@@ -35,11 +37,19 @@ import { toolbar as tb } from './toolbar'
 import { useStore } from 'vuex'
 import Heading from '@/components/eidt/Heading.vue'
 import BackgroundPick from '@/components/eidt/BackgroundPick.vue'
+import FontPick from '@/components/eidt/FontPick.vue'
 import { AppState } from '@/render/store'
 export default {
   components: {
     "Heading": Heading,
     "BackgroundPick": BackgroundPick,
+    "FontPick": FontPick,
+  },
+  methods:{
+    hidePopupByHand: function (name) {
+
+    },
+
   },
   setup () {
     const store = useStore()

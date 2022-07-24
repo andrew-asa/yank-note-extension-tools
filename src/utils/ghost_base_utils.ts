@@ -359,7 +359,7 @@ export function global_resize () {
  */
 export function run_no_exception (fn: Function, ...paras) {
   try {
-    fn(paras)
+    fn(...paras)
   } catch (e){
 
   }

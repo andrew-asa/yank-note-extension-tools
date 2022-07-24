@@ -6,6 +6,7 @@ import {
   headingText, isInnerBackgroundColorText, parseTdContent,
   uncheckPrefix
 } from '@/utils/ghost_base_toolbar'
+import { isNoNegativeInteger } from '@/utils/StringUtils'
 
 test('heading', () => {
   expect(headingText('#', '2')).toStrictEqual('# 2')
@@ -39,12 +40,13 @@ test('isInnerBackgroundColorText', () => {
   expect(isInnerBackgroundColorText('<s bgcolor="green">>sss</s> ')).toBe(false)
 })
 
-test('parseTdContent', () => {
-  expect(parseTdContent('abc')).toStrictEqual('')
-  expect(parseTdContent('<td>aaaa</td>')).toStrictEqual('aaaa')
-  expect(parseTdContent('<td1>aaaa</td1>')).toStrictEqual('')
-})
 
-test('parseTdContent', () => {
-  // expect(buildBackgroundColorText('sss',"green")).toStrictEqual('<td bgcolor="green">sss</td>')
+test('isNoNegativeInteger', () => {
+  expect(isNoNegativeInteger('sss')).toBe(false)
+  expect(isNoNegativeInteger('0')).toBe(true)
+  expect(isNoNegativeInteger('1')).toBe(true)
+  expect(isNoNegativeInteger('11')).toBe(true)
+  expect(isNoNegativeInteger('101')).toBe(true)
+  expect(isNoNegativeInteger('-101')).toBe(false)
+  expect(isNoNegativeInteger('1.1')).toBe(false)
 })

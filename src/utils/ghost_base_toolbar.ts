@@ -391,7 +391,6 @@ export function insertTable () {
 
 export function backgroundColor (color: string) {
   replaceSelect(buildBackgroundColorText(getSelectText(),color))
-  // console.log(color)
 }
 
 export const TD_BACKGROUND_COLOR_TEST = /^\s*<td bgcolor=[^>]*>[\s\S]*<\/td>\s*$/
@@ -425,6 +424,27 @@ export function buildBackgroundColorText (content: string, colorStr: string) {
   var dom = htmlStrToSpanDom(content)
   // @ts-ignore
   dom.style.background=colorStr
+  // @ts-ignore
+  return dom?.outerHTML
+}
+
+/**
+ * 字体设置
+ * @param setting {color:"red" ...}
+ */
+export function fontSetting (setting) {
+  // console.log(setting)
+  replaceSelect(buildFontSettingText(getSelectText(),setting))
+}
+
+export function buildFontSettingText (content: string, setting) {
+  var dom = htmlStrToSpanDom(content)
+  if (setting) {
+    for (var k in setting) {
+      // @ts-ignore
+      dom.style[k] = setting[k]
+    }
+  }
   // @ts-ignore
   return dom?.outerHTML
 }

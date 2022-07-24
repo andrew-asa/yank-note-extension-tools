@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import edit_index from '@/components/Edit.vue'
 import edit_color_pick from '@/components/eidt/ColorPick.vue'
 import edit_background_color_pick from '@/components/eidt/BackgroundPick.vue'
+import edit_font_pick from '@/components/eidt/FontPick.vue'
 import demo_popup from '@/components/demo/popup.vue'
 import demo_popup2 from '@/components/demo/popup2.vue'
 import demo_show from '@/components/demo/show.vue'
@@ -25,6 +26,10 @@ const routes = [
     path: '/edit/edit_background_color_pick',
     name: 'edit_background_color_pick',
     component: edit_background_color_pick
+  }, {
+    path: '/edit/edit_font_pick',
+    name: 'edit_font_pick',
+    component: edit_font_pick
   }, {
     path: '/demo/popup',
     name: 'demo_popup',

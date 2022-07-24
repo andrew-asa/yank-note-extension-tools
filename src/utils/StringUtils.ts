@@ -36,6 +36,14 @@ export function startWith (str: string, start: string) {
 // #开头，后面是数字和a-f的字符（大写或小写），这个值是6位或3位。
 export const COLOR_REG = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/
 export const COLOR_REG_STR = '^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$'
+/**
+ * 两位数的字体大小正则
+ */
+export const FONT_SIZE_PX_REG = /^[1-9]?[0-9]?(px|PX)?$/
+/**
+ * 非负整数
+ */
+export const NO_NEGATIVE_INT_REG = /^[0-9]+$/
 
 /**
  * 字符串判断是否符合某个正则表达式
@@ -53,4 +61,8 @@ export function testStr (str: string, regStr: string | RegExp) {
     return reg.test(str)
   }
   return false
+}
+
+export function isNoNegativeInteger (s:string) {
+  return testStr(s, NO_NEGATIVE_INT_REG)
 }

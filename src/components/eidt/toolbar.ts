@@ -54,6 +54,8 @@ export const toolbar = [{
   name: 'faPencil',
   tooltipMsg: '字体设置',
   icon: faPencil,
+  popupUp: true,
+  popupPane: "FontPick",
   fn: () => {
   },
 }, {

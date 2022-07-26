@@ -7,9 +7,6 @@ import {
   deleteOutLinkLocationImage,
   duplicateLine, moveLineDown, moveLineUp
 } from '@/utils/ghost_base_utils'
-import { triggerEditPanel } from '@/markdown_edit'
-import { toggleToolbar } from '@/utils/ghost_base_toolbar'
-import store from '@/render/store'
 
 export default function () {
   registerPlugin({
@@ -21,15 +18,7 @@ export default function () {
           id: EXTENSION_NAME + 'plugin-fast-operation',
           position: 'left',
           title: '编辑',
-          list: [{
-            id: EXTENSION_NAME + 'edit',
-            type: 'normal',
-            title: '显示工具栏',
-            checked: store.state.showToolbar,
-            onClick: () => {
-              toggleToolbar()
-            }
-          }, {
+          list: [ {
             id: EXTENSION_NAME + 'plugin-delete-after',
             type: 'normal',
             title: '删除光标后的行',

@@ -1,17 +1,17 @@
 {
-  "name": "@yank-note/extension-tools",
+  "name": "yank-note-extension-tools",
   "version": "1.0.1",
   "displayName": "Yank Note Tools",
   "description": "Tools For Yank Note",
   "displayName_ZH-CN": "yank note小工具",
   "description_ZH-CN": "yank note小工具",
-  "author": "asa.andrew",
+  "author": "andrew_asa",
   "license": "AGPL-3.0",
   "keywords": [],
   "homepage": "https://github.com/andrew-asa/yank-note-extension-tools",
   "repository": {
     "type": "git",
-    "url": "git@github.com:andrew-asa/yank-note-extension-tools.git"
+    "url": "git+ssh://git@github.com/andrew-asa/yank-note-extension-tools.git"
   },
   "main": "./dist/index.js",
   "icon": "./icon.png",
@@ -38,7 +38,8 @@
     "lint": "vue-tsc --noEmit && yarn run eslint '{src,__tests__}/**/*.{js,ts,tsx,vue}'",
     "version": "conventional-changelog -t extension-sublime-merge- --commit-path . -p angular -i CHANGELOG.md -s && npm run tag-version",
     "tag-version": "git add . && git commit -m 'chore(release): bump extension-sublime-merge version' && git tag extension-sublime-merge-$npm_package_version",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "publish": "npm publish"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.2.1",
@@ -75,5 +76,8 @@
     "vue-awesome": "^4.5.0",
     "vue-router": "^4.1.2",
     "vuex": "^4.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/andrew-asa/yank-note-extension-tools/issues"
   }
 }

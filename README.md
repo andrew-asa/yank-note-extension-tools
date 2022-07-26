@@ -7,5 +7,3 @@
 ![img.png](https://raw.githubusercontent.com/andrew-asa/yank-note-extension-tools/master/resource/img.png)
 ![img.png](https://raw.githubusercontent.com/andrew-asa/yank-note-extension-tools/master/resource/usr-img.png)
 
-
-![img.png](img.png)

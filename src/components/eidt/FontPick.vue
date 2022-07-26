@@ -31,7 +31,7 @@
 
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from 'vue'
 import ColorPick from './ColorPick.vue'
 import FontSizePick from './FontSizePick.vue'
@@ -62,7 +62,7 @@ export default {
       this.$emit('sure', obj)
     },
     selectTable: function (tab, event) {
-      // console.log(tab, event)
+      console.log(tab, event)
     },
     /**
      * 选择了
@@ -83,7 +83,7 @@ export default {
       })
     },
   },
-  setup (props) {
+  setup () {
     const activeCard = ref('font_color')
     const selectColor = ref('')
     const selectSize = ref('')
@@ -92,6 +92,7 @@ export default {
     function getDynamicTagIndexByType (type) {
       for (var i = 0; i < dynamicTags.value.length; i++) {
         var item = dynamicTags.value[i]
+        // @ts-ignore
         if (item.type == type) {
           return i
         }
@@ -107,6 +108,7 @@ export default {
       }
       var index = getDynamicTagIndexByType(tag.type)
       if (index >= 0) {
+        // @ts-ignore
         dynamicTags.value.splice(dynamicTags.value.indexOf(index), 1)
       }
     }
@@ -115,8 +117,10 @@ export default {
       var index = getDynamicTagIndexByType(tag.type)
       if (index >= 0) {
         // dynamicTags.value[index] = tag
+        // @ts-ignore
         dynamicTags.value[index].value = tag.value
       } else {
+        // @ts-ignore
         dynamicTags.value.push(tag)
       }
     }

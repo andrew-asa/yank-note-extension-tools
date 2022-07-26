@@ -7,6 +7,7 @@ import Edit from '../eidt/index.vue'
 import { useStore } from 'vuex'
 import { reactive, toRefs } from 'vue'
 import { toggleToolbar } from '@/utils/ghost_base_toolbar'
+import { AppState } from '@/render/store'
 
 export default {
   components:{

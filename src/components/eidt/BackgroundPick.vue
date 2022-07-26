@@ -2,7 +2,7 @@
   <color-pick @sure="sure"></color-pick>
 </template>
 
-<script>
+<script lang="ts">
 import ColorPick from './ColorPick.vue'
 import { backgroundColor, heading } from '@/utils/ghost_base_toolbar'
 import { run_no_exception } from '@/utils/ghost_base_utils'
@@ -16,6 +16,7 @@ export default {
       this.$emit('sure', value)
     }
   },
+  // @ts-ignore
   setup (props) {
     return {}
   }

@@ -29,21 +29,11 @@ export default {
       run_no_exception(heading,value)
     }
   },
-  setup (props) {
-    // function head (prefix: string) {
-    //   // console.log(prefix)
-    //   props.hide()
-    //   heading(prefix)
-    // }
-    //
-    // function mouseleave () {
-    //   // console.log("mouseleave")
-    //   props.hide()
-    // }
+  setup () {
+
 
     return {
-      // head,
-      // mouseleave
+
     }
   },
 }

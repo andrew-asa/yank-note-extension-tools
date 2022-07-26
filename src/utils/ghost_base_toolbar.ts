@@ -430,7 +430,7 @@ export function buildBackgroundColorText (content: string, colorStr: string) {
 
 /**
  * 字体设置
- * @param setting {color:"red" ...}
+ * @param setting {color:"red"}
  */
 export function fontSetting (setting) {
   // console.log(setting)

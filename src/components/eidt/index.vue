@@ -46,7 +46,7 @@ export default {
     "FontPick": FontPick,
   },
   methods:{
-    hidePopupByHand: function (name) {
+    hidePopupByHand: function () {
 
     },
 

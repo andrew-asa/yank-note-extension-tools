@@ -41,7 +41,7 @@ export default {
       }
     }
   },
-  setup (props) {
+  setup () {
     const sizeInput = ref('')
     return {
       sizeInput

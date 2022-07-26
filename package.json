@@ -1,6 +1,6 @@
 {
   "name": "@yank-note/extension-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Yank Note Tools",
   "description": "Tools For Yank Note",
   "displayName_ZH-CN": "yank note小工具",
@@ -8,10 +8,10 @@
   "author": "asa.andrew",
   "license": "AGPL-3.0",
   "keywords": [],
-  "homepage": "https://github.com/andrew-asa",
+  "homepage": "https://github.com/andrew-asa/yank-note-extension-tools",
   "repository": {
     "type": "git",
-    "url": "https://github.com/andrew-asa"
+    "url": "git@github.com:andrew-asa/yank-note-extension-tools.git"
   },
   "main": "./dist/index.js",
   "icon": "./icon.png",

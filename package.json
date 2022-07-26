@@ -1,10 +1,10 @@
 {
-  "name": "yank-note-extension-tools",
+  "name": "yank-note-extension-tool-bar",
   "version": "1.0.2",
-  "displayName": "Yank Note Tools",
-  "description": "Tools For Yank Note",
-  "displayName_ZH-CN": "yank note小工具",
-  "description_ZH-CN": "yank note小工具",
+  "displayName": "Tool Bar",
+  "description": "Tool Bar For Yank Note",
+  "displayName_ZH-CN": "工具栏",
+  "description_ZH-CN": "Yank Note 工具栏",
   "author": "andrew_asa",
   "license": "AGPL-3.0",
   "keywords": [],
@@ -18,9 +18,6 @@
   "engines": {
     "node": ">=14.6.0",
     "yank-note": "^3.30.0"
-  },
-  "requirements": {
-    "terminal": true
   },
   "files": [
     "dist",
@@ -36,8 +33,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "onlybuild": "vite build",
     "lint": "vue-tsc --noEmit && yarn run eslint '{src,__tests__}/**/*.{js,ts,tsx,vue}'",
-    "version": "conventional-changelog -t extension-sublime-merge- --commit-path . -p angular -i CHANGELOG.md -s && npm run tag-version",
-    "tag-version": "git add . && git commit -m 'chore(release): bump extension-sublime-merge version' && git tag extension-sublime-merge-$npm_package_version",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "prepublish": "npm run build",
     "publish": "npm publish"
   },

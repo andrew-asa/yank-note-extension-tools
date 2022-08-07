@@ -33,6 +33,22 @@ export default function () {
             onClick: () => {
               insert('星期' + '天一二三四五六'.charAt(new Date().getDay()))
             }
+          }, {
+            id: 'asa-enhance-insert-template-mark-map',
+            type: 'normal',
+            title: '预览器-MarkMap',
+            onClick: () => {
+              insert('---\n' +
+                'defaultPreviewer: \'Markmap\'\n' +
+                '---\n')
+            }
+          }, {
+            id: 'asa-enhance-insert-template-node-mark-map',
+            type: 'normal',
+            title: '节点-MarkMap',
+            onClick: () => {
+              insert('{.mindmap}')
+            }
           }]
         }
       })

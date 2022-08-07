@@ -4,7 +4,7 @@ import {
   addPeerDirectoryAfter, addPeerDirectoryBefore,
   deleteAfter,
   deleteOutLinkLocationImage,
-  duplicateLine, moveLineDown, moveLineUp
+  duplicateLine, moveLineDown, moveLineUp, removeCurrentDirectory
 } from '@/utils/ghost_base_utils'
 
 export default function () {
@@ -69,6 +69,13 @@ export default function () {
               title: '前方同级目录',
               onClick: () => {
                 addPeerDirectoryBefore()
+              }
+            }, {
+              id: EXTENSION_NAME + 'plugin-fast-operation-up-remove-directory',
+              type: 'normal',
+              title: '删除目录',
+              onClick: () => {
+                removeCurrentDirectory()
               }
             }]
         }

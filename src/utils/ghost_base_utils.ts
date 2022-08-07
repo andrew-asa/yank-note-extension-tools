@@ -74,6 +74,9 @@ export function getLineContent (lineNumber: number) {
   return ctx.editor.getLineContent(lineNumber)
 }
 
+/**
+ * 获取当前光标后行文本内容
+ */
 export function getCurrentLineContent () {
   return getLineContent(getCurrentLineNumber())
 }
@@ -114,10 +117,44 @@ export function replaceLines (lineStart, lineEnd, text) {
   ctx.editor.replaceLines(lineStart, lineEnd, text)
 }
 
+/**
+ * 替换行
+ * @param lineNumber
+ * @param text
+ */
 export function replaceLine (lineNumber, text) {
   ctx.editor.replaceLine(lineNumber, text)
 }
 
+/**
+ * 删除行
+ * @param lineNumber
+ */
+export function deleteLine (lineNumber: number) {
+  ctx.editor.deleteLine(lineNumber)
+}
+
+/**
+ * 删除多行
+ * @param line
+ * @param endLine
+ */
+export function deleteLines (line: number, endLine: number) {
+  const editor = getEditor()
+  editor.executeEdits('', [
+    {
+      range: new (getMonaco().Range)(line, 1, endLine + 1, 1),
+      text: null
+    }
+  ])
+  editor.setPosition(new (getMonaco().Position)(line, 1))
+  editor.focus()
+}
+
+/**
+ * 重复当前行
+ * @param text
+ */
 export function replaceCurrentLine (text) {
   var ln = getCurrentLineNumber()
   replaceLine(ln, text)
@@ -453,6 +490,48 @@ export function addPeerDirectoryBefore () {
   if (testStr(text, HEADING_REG)) {
     let currentLevel = getHeadingLevel(text)
     addHeading(currentLevel, ln)
+  }
+}
+
+/**
+ * 删除当前目录
+ */
+export function removeCurrentDirectory () {
+  let range = getCurrentDirectoryRange()
+  deleteLines(range.startLine, range.endLine)
+}
+
+/**
+ * 获取当前目录范围
+ */
+export function getCurrentDirectoryRange () {
+  return getDirectoryRange(getCurrentLineNumber())
+}
+
+/**
+ * 获取当前目录范围
+ */
+export function getDirectoryRange (line: number) {
+  let startLine = line < 1 ? 1 : line
+  let text = getLineContent(line)
+  let endLine = startLine
+  let currentLevel = getHeadingLevel(text)
+  if (currentLevel != 0) {
+    let lineCount = getLineCount()
+    for (let i = startLine + 1; i <= lineCount; i++) {
+      let ct = getLineContent(i)
+      let level = getHeadingLevel(ct)
+      if (level > 0 && level <= currentLevel) {
+        endLine = i - 1
+        break
+      } else {
+        endLine = i
+      }
+    }
+  }
+  return {
+    startLine: startLine,
+    endLine: endLine
   }
 }
 

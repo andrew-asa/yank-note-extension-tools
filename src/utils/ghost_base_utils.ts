@@ -1,4 +1,5 @@
 import { ctx } from '@yank-note/runtime-api'
+import { isNoEmpty, testStr } from '@/utils/StringUtils'
 
 /**
  * 运行脚本
@@ -94,6 +95,15 @@ export function getCurrentFile () {
  */
 export function insert (text: string) {
   ctx.editor.insert(text)
+}
+
+/**
+ * 插入行
+ * @param text
+ * @param line
+ */
+export function insertLineAt (text: string, line: number) {
+  ctx.editor.insertAt(createPosition(line, 1), text + '\n')
 }
 
 export function insertAt (line: number, column: number, text: string) {
@@ -360,7 +370,7 @@ export function global_resize () {
 export function run_no_exception (fn: Function, ...paras) {
   try {
     fn(...paras)
-  } catch (e){
+  } catch (e) {
 
   }
 }
@@ -369,11 +379,80 @@ export function run_no_exception (fn: Function, ...paras) {
  * 随机字符串
  * @param len
  */
-export function randomString(len:number) {
-  len = len || 32;
-  var t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678",
+export function randomString (len: number) {
+  len = len || 32
+  var t = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678',
     a = t.length,
-    n = "";
-  for (var i = 0; i < len; i++) n += t.charAt(Math.floor(Math.random() * a));
+    n = ''
+  for (var i = 0; i < len; i++) n += t.charAt(Math.floor(Math.random() * a))
   return n
 }
+
+export const HEADING_REG = /^#{1,6}\s/
+
+export function getHeadingLevel (text: string) {
+  if (isNoEmpty(text)) {
+    let r = text.match(HEADING_REG)
+    if (r != null && r.length > 0) {
+      let ht = r[0]
+      return ht.trim().length
+    }
+  }
+  return 0
+}
+
+/**
+ * 后方增加同级目录
+ */
+export function addPeerDirectoryAfter () {
+  let ln = getCurrentLineNumber()
+  let text = getCurrentLineContent()
+  if (testStr(text, HEADING_REG)) {
+    let currentLevel = getHeadingLevel(text)
+    let endLine = getLineCount()
+    let insertLine = ln + 1
+    for (; insertLine <= endLine; insertLine++) {
+      let ct = getLineContent(insertLine)
+      let level = getHeadingLevel(ct)
+      if (level > 0 && level <= currentLevel) {
+        break
+      }
+    }
+    addHeading(currentLevel, insertLine)
+  }
+}
+
+/**
+ * 添加标题行
+ * @param level
+ * @param lineNumber
+ */
+export function addHeading (level: number, lineNumber: number) {
+  if (level > 0) {
+    let insertText = '#'.repeat(level) + ' '
+    // insertLineAt(insertText, lineNumber)
+    let lc = getLineCount()
+    if (lineNumber >= lc) {
+      // 需要处理
+      replaceLine(lc, getLineContent(lc) + '\n' + insertText)
+    } else if (lineNumber < 0) {
+      insertLineAt(insertText + '\n', 1)
+    } else {
+      insertLineAt(insertText, lineNumber)
+    }
+    setPosition(lineNumber, insertText.length + 1)
+  }
+}
+
+/**
+ * 前方增加同级目录
+ */
+export function addPeerDirectoryBefore () {
+  let ln = getCurrentLineNumber()
+  let text = getCurrentLineContent()
+  if (testStr(text, HEADING_REG)) {
+    let currentLevel = getHeadingLevel(text)
+    addHeading(currentLevel, ln)
+  }
+}
+

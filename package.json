@@ -1,6 +1,6 @@
 {
   "name": "yank-note-extension-tools",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "displayName": "Tools",
   "description": "Tools For Yank Note",
   "displayName_ZH-CN": "小工具",
@@ -34,8 +34,7 @@
     "onlybuild": "vite build",
     "lint": "vue-tsc --noEmit && yarn run eslint '{src,__tests__}/**/*.{js,ts,tsx,vue}'",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "prepublish": "npm run build",
-    "publish": "npm publish"
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.2.1",

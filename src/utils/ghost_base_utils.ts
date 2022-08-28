@@ -1,5 +1,6 @@
 import { ctx } from '@yank-note/runtime-api'
 import { isNoEmpty, testStr } from '@/utils/StringUtils'
+import { IRange } from '@yank-note/runtime-api/types/types/third-party/monaco-editor'
 
 /**
  * 运行脚本
@@ -39,6 +40,23 @@ export function setPosition (line: number, column: number) {
   editor.focus()
 }
 
+/**
+ * 设置选择范围
+ * @param startLineNumber
+ * @param startColumn
+ * @param endLineNumber
+ * @param endColumn
+ */
+export function setSelection (startLineNumber, startColumn, endLineNumber, endColumn) {
+  var editor = getEditor()
+  editor.setSelection({
+    endColumn: endColumn,
+    endLineNumber: endLineNumber,
+    startColumn: startColumn,
+    startLineNumber: startLineNumber
+  })
+}
+
 export function createPosition (line, column) {
   var monaco = getMonaco()
   return new monaco.Position(line, column)
@@ -72,6 +90,15 @@ export function getLineCount () {
  */
 export function getLineContent (lineNumber: number) {
   return ctx.editor.getLineContent(lineNumber)
+}
+
+/**
+ * 获取指定行文本
+ * @param lineStart
+ * @param lineEnd
+ */
+export function getLinesContent (lineStart: number, lineEnd: number) {
+  return ctx.editor.getLinesContent(lineStart, lineEnd)
 }
 
 /**
@@ -184,14 +211,20 @@ export function duplicateLine () {
  * 行上移
  */
 export function moveLineUp () {
-  var lineNumber = getCurrentLineNumber()
-  if (lineNumber > 1) {
+  var selectionInfo = getSection()
+  let startLine = selectionInfo?.startLineNumber || 0
+  let endLine = selectionInfo?.endLineNumber || 0
+  var lineNumber = startLine
+  // 单行
+  // @ts-ignore
+  if (startLine > 1) {
     var column = getCurrentColumnNumber()
     var upNumber = lineNumber - 1
     var uS = getLineContent(upNumber)
-    var tS = getLineContent(lineNumber)
-    replaceLines(upNumber, lineNumber, tS + '\n' + uS)
-    setPosition(upNumber, column)
+    var tS = getLinesContent(startLine, endLine)
+    replaceLines(upNumber, endLine, tS + '\n' + uS)
+    // setPosition(upNumber, column)
+    setSelection(startLine - 1, selectionInfo?.startColumn, endLine - 1, selectionInfo?.endColumn)
   }
 }
 
@@ -199,13 +232,16 @@ export function moveLineUp () {
  * 行下移
  */
 export function moveLineDown () {
-  var lineNumber = getCurrentLineNumber()
+  var selectionInfo = getSection()
+  let startLine = selectionInfo?.startLineNumber || 0
+  let endLine = selectionInfo?.endLineNumber || 0
   var lineCount = getLineCount()
-  if (lineNumber < lineCount) {
-    var downNumber = lineNumber + 1
+  if (endLine < lineCount) {
+    var downNumber = endLine + 1
     var dS = getLineContent(downNumber)
-    var tS = getLineContent(lineNumber)
-    replaceLines(lineNumber, downNumber, dS + '\n' + tS)
+    var tS = getLinesContent(startLine, endLine)
+    replaceLines(startLine, downNumber, dS + '\n' + tS)
+    setSelection(startLine + 1, selectionInfo?.startColumn, endLine + 1, selectionInfo?.endColumn)
   }
 }
 

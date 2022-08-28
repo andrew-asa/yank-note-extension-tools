@@ -1,11 +1,13 @@
 import * as base_utils from './ghost_base_utils'
 import * as base_dom from './base_dom'
 import * as string_utils from './StringUtils'
+import * as pinyin_utils from './ghost_base_pinyin'
 
 const ghost = Object.freeze({
   base_dom,
   base_utils,
-  string_utils
+  string_utils,
+  pinyin_utils
 })
 
 export type Ghost = typeof ghost

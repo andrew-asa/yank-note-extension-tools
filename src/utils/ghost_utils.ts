@@ -14,15 +14,16 @@ export type Ghost = typeof ghost
 export default ghost
 
 export function installGhost () {
-  console.log('installGhost')
+  console.log('enhance installGhost')
   try {
-    Object.defineProperty(window, 'ghost', {
+    Object.defineProperty(window, 'yank_enhance', {
       configurable: false,
       writable: false,
       value: ghost,
     })
   } catch (e) {
-    console.log('error installGhost')
+    console.log('error install yank_enhance')
+    console.log(e)
   }
-  console.log('success installGhost')
+  console.log('success install yank_enhance')
 }

@@ -24,13 +24,6 @@ export default function () {
             onClick: () => {
               deleteAfter()
             }
-          }, {
-            id: EXTENSION_NAME + 'plugin-delete-out-link-location-image',
-            type: 'normal',
-            title: '删除外链图片',
-            onClick: () => {
-              deleteOutLinkLocationImage()
-            }
           },
             {
               id: EXTENSION_NAME + 'plugin-fast-operation-duplicate-line',

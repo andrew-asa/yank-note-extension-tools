@@ -9,7 +9,7 @@
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "outDir": "lib",
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "strictNullChecks": true,
     "sourceMap": true,
     "resolveJsonModule": true,

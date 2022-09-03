@@ -14,6 +14,48 @@ export function runCode (language: string, code: string, exit: boolean) {
   ctx.action.getActionHandler('xterm.run-code')(language, code, exit)
 }
 
+export function runPaddleEnvCode (code, exit = true) {
+  var shell = 'source ~/.bash_profile\n' +
+    'conda activate  paddleenv\n' +
+    'cd /Users/andrew_asa/Documents/code/github/andrew-asa/exec/python\n' +
+    'result=`python - <<EOF\n' +
+    code +
+    'EOF` \n ' +
+    'echo $result'
+  if (exit) {
+    shell = '\n' + shell
+  }
+  return runShellCode(shell)
+}
+
+export function runPaddleEnvWithParameter (code, p) {
+  return runPaddleEnvCode(formatParameterStr(code, p))
+}
+
+/**
+ * 添加引号 a = "a"
+ * @param str
+ */
+export function addQuotationMarks (str) {
+  return '"' + str + '"'
+}
+
+/**
+ * a="${a}" b=${b} , {a:2,b:2} = > a=2 b=2
+ * @param str
+ * @param p
+ */
+export function formatParameterStr (str = '', p = {}) {
+  if (str && p) {
+    var r = str
+    for (let key in p) {
+      r = r.replaceAll('${' + key + '}', p[key])
+    }
+    return r
+  }
+  return ''
+}
+
 /**
  * 异步运行代码
  * @param code
@@ -292,52 +334,6 @@ export function getSelectText () {
 }
 
 /**
- * 粘贴板图片ocr
- */
-export function clipboardOcr () {
-  var sell = 'source ~/.bash_profile\n' +
-    'conda activate  paddleenv\n' +
-    'cd /Users/andrew_asa/Documents/code/github/andrew-asa/exec/python\n' +
-    'result=`python - <<EOF\n' +
-    'from python_tools.ocr.img_ocr import ImageOcr\n' +
-    'ocr = ImageOcr()\n' +
-    'ocr.ocr_clipboard_img()\n' +
-    'EOF` \n ' +
-    'echo $result \n' +
-    'exit'
-  runShellCode(sell)
-}
-
-/**
- * 表格ocr识别
- */
-export function clipboardTableOcr () {
-  var sell = 'source ~/.bash_profile\n' +
-    'conda activate  paddleenv\n' +
-    'cd /Users/andrew_asa/Documents/code/github/andrew-asa/exec/python\n' +
-    'result=`python - <<EOF\n' +
-    'from python_tools.ocr.img_ocr import ImageOcr\n' +
-    'from python_tools.utils.ClipboardUtils import ClipboardUtils\n' +
-    'from python_tools.utils.StringUtils import StringUtils\n' +
-    'ocr = ImageOcr()\n' +
-    'content = ocr.ocr_clipboard_img(print_in_console=False,copy_to_clipboard=False,colSequence=" | ",rowSequence=" |\\n| ")\n' +
-    'content = "| " + content + " |"\n' +
-    'ClipboardUtils.copyToClipboard(content)\n' +
-    'print("--ocr result --")\n' +
-    'print(content)\n' +
-    'print("--ocr result --")\n' +
-    'EOF` \n ' +
-    'echo $result \n' +
-    'exit'
-  // 'exit'
-  runShellCode(sell)
-  // asynRunShellCode(sell,function (echo){
-  //     ctx.ui.useToast().show('info', 'OCR识别完成', 2000)
-  //     // console.log(echo)
-  // });
-}
-
-/**
  * 删除文档
  * @param doc
  */
@@ -571,3 +567,29 @@ export function getDirectoryRange (line: number) {
   }
 }
 
+export function createSplicingOfMovieLinesScript (img_folder, img_list, out, top_padding, bottom_padding) {
+  var shell = 'from python_tools.img.screenshots.join_screenshots import Screenshot_Join\n' +
+    'img_folder = "${img_folder}"\n' +
+    'img_list = "${img_list}"\n' +
+    'out = "${out}"\n' +
+    'top_padding = "${top_padding}"\n' +
+    'bottom_padding = "${bottom_padding}"\n' +
+    'sj = Screenshot_Join()\n' +
+    'sj.join(img_folder=img_folder,img_list=img_list, out=out, top_padding=top_padding, bottom_padding=bottom_padding)\n'
+  return formatParameterStr(shell, splicingOfMovieLinesParameter(img_folder, img_list, out, top_padding, bottom_padding))
+}
+
+export function splicingOfMovieLines (img_folder, img_list, out, top_padding, bottom_padding) {
+  runPaddleEnvCode(createSplicingOfMovieLinesScript(img_folder, img_list, out, top_padding, bottom_padding),
+    false)
+}
+
+export function splicingOfMovieLinesParameter (img_folder, img_list, out, top_padding, bottom_padding) {
+  return {
+    img_folder: img_folder,
+    img_list: img_list,
+    out: out,
+    top_padding: top_padding,
+    bottom_padding: bottom_padding
+  }
+}

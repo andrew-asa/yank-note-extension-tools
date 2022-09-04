@@ -1,11 +1,20 @@
 import { registerPlugin } from '@yank-note/runtime-api'
 import { EXTENSION_NAME } from '@/utils/base_constant'
 import {
-  addQuotationMarks,
+  addQuotationMarks, appendText, buildMdSrcContent,
   deleteOutLinkLocationImage,
+  dirname, getCurrentFile,
+  getCurrentRepo,
+  getLocalImgPaths,
+  getSection, getSectionLineRange,
+  getSelectionImgPaths,
+  join, randomString, refreshTree,
+  resolve,
   runPaddleEnvCode,
-  runPaddleEnvWithParameter
+  runPaddleEnvWithParameter,
+  splicingOfMovieLines
 } from '@/utils/ghost_base_utils'
+import { info } from '@/utils/base_ui'
 
 /**
  * 粘贴板图片ocr
@@ -39,8 +48,56 @@ function clipboardTableOcr () {
 /**
  * 电影台词拼接
  */
-function splicingOfMovieLines () {
+function splicingOfMovieLine (all = true) {
+  var imgs = []
+  // @ts-ignore
+  if (all) {
+    imgs = getLocalImgPaths()
+  } else {
+    imgs = getSelectionImgPaths()
+  }
+  if (imgs.length > 0) {
+    imgs = removeAb(imgs)
+    // @ts-ignore
+    var repPath = getCurrentRepo().path
+    // @ts-ignore
+    var fileDir = dirname(getCurrentFile().path)
+    var fn = randomString(4) + '_concat_all.png'
+    var concatName = join(repPath, fileDir, fn)
+    // @ts-ignore
+    splicingOfMovieLines(repPath, imgs.join(';'), concatName, 5, 2)
+    appendText(buildMdSrcContent('IMG', './' + fn))
+  }
 
+}
+
+function removeAb (imgs) {
+  var ret = []
+  for (var i = 0; i < imgs.length; i++) {
+    var img = imgs[i]
+    if (img.startsWith('/')) {
+      // @ts-ignore
+      ret.push(img.substring(1))
+    }
+  }
+  return ret
+}
+
+/**
+ * 删除选中的图片外链以及本地图片
+ */
+function deleteOutLinkLocationImages () {
+  var {
+    startLineNumber,
+    endLineNumber
+  } = getSectionLineRange()
+  if (startLineNumber == endLineNumber) {
+    deleteOutLinkLocationImage()
+  } else if (endLineNumber > startLineNumber) {
+    for (var i = endLineNumber; i >= startLineNumber; i--) {
+      deleteOutLinkLocationImage(i, true)
+    }
+  }
 }
 
 /**
@@ -65,7 +122,7 @@ export default function () {
             type: 'normal',
             title: '删除外链图片',
             onClick: () => {
-              deleteOutLinkLocationImage()
+              deleteOutLinkLocationImages()
             }
           },
             {
@@ -85,9 +142,16 @@ export default function () {
             }, {
               id: EXTENSION_NAME + 'splicing-movie-line-md',
               type: 'normal',
-              title: '电影台词拼接',
+              title: '选中图片台词拼接',
               onClick: () => {
-                splicingOfMovieLines()
+                splicingOfMovieLine(false)
+              }
+            }, {
+              id: EXTENSION_NAME + 'file-splicing-movie-line-md',
+              type: 'normal',
+              title: '所有图片台词拼接',
+              onClick: () => {
+                splicingOfMovieLine()
               }
             }, {
               id: EXTENSION_NAME + 'screenshot-notes-ocr-md',

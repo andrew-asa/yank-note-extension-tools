@@ -1,17 +1,17 @@
 import { ctx } from '@yank-note/runtime-api'
 import { isNoEmpty, testStr } from '@/utils/StringUtils'
-import { IRange } from '@yank-note/runtime-api/types/types/third-party/monaco-editor'
+import { info, warning } from '@/utils/base_ui'
 
 /**
  * 运行脚本
  * @param code
  */
 export function runShellCode (code: string) {
-  ctx.action.getActionHandler('xterm.run')(code)
+  return ctx.action.getActionHandler('xterm.run')(code)
 }
 
 export function runCode (language: string, code: string, exit: boolean) {
-  ctx.action.getActionHandler('xterm.run-code')(language, code, exit)
+  return ctx.action.getActionHandler('xterm.run-code')(language, code, exit)
 }
 
 export function runPaddleEnvCode (code, exit = true) {
@@ -23,9 +23,23 @@ export function runPaddleEnvCode (code, exit = true) {
     'EOF` \n ' +
     'echo $result'
   if (exit) {
-    shell = '\n' + shell
+    shell = '\n' + 'exit'
   }
   return runShellCode(shell)
+}
+
+export function asynRunPaddleEnvCode (code, exit = true) {
+  var shell = 'source ~/.bash_profile\n' +
+    'conda activate  paddleenv\n' +
+    'cd /Users/andrew_asa/Documents/code/github/andrew-asa/exec/python\n' +
+    'result=`python - <<EOF\n' +
+    code +
+    'EOF` \n ' +
+    'echo $result'
+  if (exit) {
+    shell = '\n' + 'exit'
+  }
+  return asynRunShellCode(shell)
 }
 
 export function runPaddleEnvWithParameter (code, p) {
@@ -59,12 +73,16 @@ export function formatParameterStr (str = '', p = {}) {
 /**
  * 异步运行代码
  * @param code
- * @param success
  */
-export function asynRunShellCode (code: string, success: Function) {
-  ctx.api.runCode('sh', code).then(function (p) {
-    success && success(p)
-  })
+export function asynRunShellCode (code: string) {
+  // ctx.api.runCode('sh', code).then(function (p) {
+  //   success && success(p)
+  // })
+  var tc = '# --run-- \n' + code
+  return ctx.api.runCode({
+    cmd: 'bash',
+    args: ['-c']
+  }, tc, true)
 }
 
 export function getEditor () {
@@ -167,6 +185,16 @@ export function getCurrentFile () {
  */
 export function insert (text: string) {
   ctx.editor.insert(text)
+}
+
+/**
+ * 后面添加行
+ * @param text
+ */
+export function appendText (text: string) {
+  var lc = getLineCount()
+  insertLineAt('\n', lc)
+  insertLineAt(text, lc + 1)
 }
 
 /**
@@ -309,6 +337,95 @@ export function getSection () {
 }
 
 /**
+ * 获取选中的行范围
+ */
+export function getSectionLineRange () {
+  var s = getSection()
+  var startLineNumber = s?.startLineNumber || 1
+  var endLineNumber = s?.endLineNumber || 1
+  return {
+    startLineNumber,
+    endLineNumber
+  }
+}
+
+export function getViewDom () {
+  // @ts-ignore
+  return ctx.view.getViewDom()
+}
+
+export function getImgDom () {
+  // @ts-ignore
+  return ctx.view.getViewDom().querySelectorAll('img')
+}
+
+/**
+ * 获取当前文档的所有本地图片
+ */
+export function getLocalImgPaths () {
+  var imgList = getImgDom()
+  var result = []
+  for (let i = 0; i < imgList.length; i++) {
+    var img = imgList[i]
+    var imgAttrSrc = img.getAttribute('origin-src') || ''
+    var local = img.getAttribute('local-image') || false
+    if (isNoEmpty(imgAttrSrc) && local) {
+      // @ts-ignore
+      result.push(resolveCurrentImgPath(imgAttrSrc))
+    }
+  }
+  return result
+}
+
+/**
+ * src内容
+ * @param content
+ * @param src
+ */
+export function buildMdSrcContent (content, src) {
+  return '![' + content + '](' + src + ')'
+}
+
+/**
+ * 获取选中文本的所有本地图片
+ */
+export function getSelectionImgPaths () {
+  var s = getSection()
+  var startLineNumber = s?.startLineNumber || 0
+  var endLineNumber = s?.endLineNumber || 1
+  var ret = []
+  for (var i = startLineNumber; i <= endLineNumber; i++) {
+    ret = ret.concat(getLineImgPaths(i))
+  }
+  return ret
+}
+
+export function getLineImgPaths (line: number) {
+  var content = getLineContent(line)
+  var links = parseImgLink(content)
+  var currentFile = getCurrentFile()
+  var ret = []
+  // var rpStr = "";
+  // @ts-ignore
+  if (links.length > 0 && currentFile.path) {
+    links.forEach((item) => {
+      var link = item[2]
+      var linkPath = resolveCurrentImgPath(link)
+      // @ts-ignore
+      ret.push(linkPath)
+    })
+  }
+  return ret
+}
+
+export function resolveCurrentImgPath (link) {
+  var currentFile = getCurrentFile()
+  // @ts-ignore
+  var dir = dirname(currentFile.path)
+  return resolve(dir, link)
+}
+
+/**
  * 替换选中的文档
  * @param text
  */
@@ -341,16 +458,58 @@ export function deleteDoc (doc) {
   ctx.doc.deleteDoc(doc)
 }
 
+/**
+ * 直接删除文件，没有
+ * @param doc
+ */
+export async function deleteFile (doc) {
+  try {
+    await ctx.api.deleteFile(doc)
+  } catch (error: any) {
+    warning(error.message)
+    throw error
+  }
+  refreshTree()
+}
+
+/**
+ * 文件名
+ * @param p
+ */
 export function basename (p) {
   return ctx.utils.path.basename(p)
 }
 
+/**
+ * 目录名
+ * @param p
+ */
 export function dirname (p) {
   return ctx.utils.path.dirname(p)
 }
 
+/**
+ * 刷新目录树
+ */
+export function refreshTree () {
+  ctx.tree.refreshTree()
+}
+
+/**
+ * 路径拼接
+ * @param dir
+ * @param name
+ */
 export function resolve (dir, name) {
   return ctx.utils.path.resolve(dir, name)
+}
+
+/**
+ * 路径拼接
+ * @param paths
+ */
+export function join (...paths: string[]) {
+  return ctx.utils.path.join(...paths)
 }
 
 /**
@@ -362,30 +521,37 @@ export function isOutLocationImage (link) {
   return link && link.startsWith('./FILES/')
 }
 
-// 删除外链图片
-export function deleteOutLinkLocationImage () {
-  var content = getCurrentLineContent()
+export function createLinkImgFileDoc () {
+
+}
+
+/**
+ * 删除外链链接
+ * @param lineNumber  第几行
+ * @param force   是否强制删除没有提示
+ */
+export function deleteOutLinkLocationImage (lineNumber = -1, force = false) {
+  var ln = lineNumber == -1 ? getCurrentLineNumber() : lineNumber
+  var content = getLineContent(ln)
   var links = parseImgLink(content)
-  var self = this
   var currentFile = getCurrentFile()
-  // var rpStr = "";
   // @ts-ignore
   if (links.length > 0 && currentFile.path) {
     // @ts-ignore
     var dir = dirname(currentFile.path)
-    var ln = getCurrentLineNumber()
     links.forEach((item) => {
       var oStr = item[0]
       var link = item[2]
       var linkPath = resolve(dir, link)
       var name = basename(link)
-      deleteDoc({
+      var doc = {
         name: name,
         path: linkPath,
         // @ts-ignore
         repo: currentFile.repo,
         type: 'file'
-      })
+      }
+      force ? deleteFile(doc) : deleteDoc(doc)
       content = content.replace(oStr, '')
       console.log('delete' + oStr + '-->' + link + '-->' + linkPath)
     })
@@ -580,8 +746,8 @@ export function createSplicingOfMovieLinesScript (img_folder, img_list, out, top
 }
 
 export function splicingOfMovieLines (img_folder, img_list, out, top_padding, bottom_padding) {
-  runPaddleEnvCode(createSplicingOfMovieLinesScript(img_folder, img_list, out, top_padding, bottom_padding),
-    false)
+  var shell = createSplicingOfMovieLinesScript(img_folder, img_list, out, top_padding, bottom_padding)
+  return runPaddleEnvCode(shell, false)
 }
 
 export function splicingOfMovieLinesParameter (img_folder, img_list, out, top_padding, bottom_padding) {

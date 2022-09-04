@@ -3,7 +3,6 @@ import { EXTENSION_NAME } from '@/utils/base_constant'
 import {
   addPeerDirectoryAfter, addPeerDirectoryBefore,
   deleteAfter,
-  deleteOutLinkLocationImage,
   duplicateLine, moveLineDown, moveLineUp, removeCurrentDirectory
 } from '@/utils/ghost_base_utils'
 

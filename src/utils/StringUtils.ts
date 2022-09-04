@@ -66,3 +66,7 @@ export function testStr (str: string, regStr: string | RegExp) {
 export function isNoNegativeInteger (s:string) {
   return testStr(s, NO_NEGATIVE_INT_REG)
 }
+
+export function isEqual (str1, str2) {
+  return str1 == str2
+}

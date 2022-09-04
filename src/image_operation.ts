@@ -8,7 +8,7 @@ import {
   getLocalImgPaths,
   getSection, getSectionLineRange,
   getSelectionImgPaths,
-  join, randomString, refreshTree,
+  join, randomString, refreshSelectLocalImgs, refreshTree,
   resolve,
   runPaddleEnvCode,
   runPaddleEnvWithParameter,
@@ -83,6 +83,8 @@ function removeAb (imgs) {
   return ret
 }
 
+
+
 /**
  * 删除选中的图片外链以及本地图片
  */
@@ -101,10 +103,10 @@ function deleteOutLinkLocationImages () {
 }
 
 /**
- * 截图笔记ocr
+ * 刷新图片
  */
-function screenshotNotesOcr () {
-
+function refreshImg () {
+  refreshSelectLocalImgs()
 }
 
 export default function () {
@@ -156,9 +158,9 @@ export default function () {
             }, {
               id: EXTENSION_NAME + 'screenshot-notes-ocr-md',
               type: 'normal',
-              title: '截图笔记OCR',
+              title: '刷新选中图片',
               onClick: () => {
-                screenshotNotesOcr()
+                refreshImg()
               }
             }]
         }

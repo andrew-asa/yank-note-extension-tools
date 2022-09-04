@@ -1,5 +1,5 @@
 import { ctx } from '@yank-note/runtime-api'
-import { isNoEmpty, testStr } from '@/utils/StringUtils'
+import { isEqual, isNoEmpty, testStr } from '@/utils/StringUtils'
 import { info, warning } from '@/utils/base_ui'
 
 /**
@@ -354,6 +354,76 @@ export function getViewDom () {
   return ctx.view.getViewDom()
 }
 
+/**
+ * 改变url参数
+ * @param url
+ * @param arg
+ * @param arg_val
+ */
+export function changeURLArg (url, arg, arg_val) {
+  var pattern = arg + '=([^&]*)'
+  var replaceText = arg + '=' + arg_val
+  if (url.match(pattern)) {
+    var tmp = '/(' + arg + '=)([^&]*)/gi'
+    tmp = url.replace(eval(tmp), replaceText)
+    return tmp
+  } else {
+    if (url.match('[\?]')) {
+      return url + '&' + replaceText
+    } else {
+      return url + '?' + replaceText
+    }
+  }
+}
+
+/**
+ * 刷新本地图片
+ * @param originSrc
+ */
+export function refreshLocalImg (originSrc: string) {
+  var imgDoms = getImgDom()
+  if (imgDoms && imgDoms.length) {
+    for (var i = 0; i < imgDoms.length; i++) {
+      var img = imgDoms[i]
+      var imgAttrSrc = img.getAttribute('origin-src') || ''
+      var local = img.getAttribute('local-image') || false
+      if (local && isEqual(imgAttrSrc, originSrc)) {
+        var src = img.getAttribute('src') || ''
+        if (src) {
+          var rt = new Date().getTime()
+          src = changeURLArg(src, '_r_time', rt)
+          img.setAttribute('src', src)
+        }
+      }
+    }
+  }
+}
+
+/**
+ * 刷新选中行的本地图片
+ */
+export function refreshSelectLocalImgs () {
+
+  travelSelectionLine(function (i) {
+    console.log("Refresh Select Local Img Line " +i)
+    var links = getLineImgLinks(i)
+    links.forEach(function (link) {
+      refreshLocalImg(link)
+    })
+  })
+
+}
+
+export function travelSelectionLine (fun) {
+  var {
+    startLineNumber,
+    endLineNumber
+  } = getSectionLineRange()
+  for (var i = startLineNumber; i <= endLineNumber; i++) {
+    fun(i)
+  }
+}
+
 export function getImgDom () {
   // @ts-ignore
   return ctx.view.getViewDom().querySelectorAll('img')
@@ -400,6 +470,10 @@ export function getSelectionImgPaths () {
   return ret
 }
 
+/**
+ * 获取指定行的图片地址
+ * @param line
+ */
 export function getLineImgPaths (line: number) {
   var content = getLineContent(line)
   var links = parseImgLink(content)
@@ -413,6 +487,24 @@ export function getLineImgPaths (line: number) {
       var linkPath = resolveCurrentImgPath(link)
       // @ts-ignore
       ret.push(linkPath)
+    })
+  }
+  return ret
+}
+
+/**
+ * 获取图片链接
+ * @param line
+ */
+export function getLineImgLinks (line: number) {
+  var content = getLineContent(line)
+  var links = parseImgLink(content)
+  var ret = []
+  // @ts-ignore
+  if (links.length >0) {
+    links.forEach((item) => {
+      var link = item[2]
+      ret.push(link)
     })
   }
   return ret

@@ -6,14 +6,18 @@ import edit_font_pick from '@/components/eidt/FontPick.vue'
 import demo_popup from '@/components/demo/popup.vue'
 import demo_popup2 from '@/components/demo/popup2.vue'
 import demo_show from '@/components/demo/show.vue'
+import demo_home from '@/components/Home.vue'
 import demo_condition from '@/components/demo/condition.vue'
+import more_template from '@/components/demo/moretemplate.vue'
 import single_heading from '@/components/eidt/Heading.vue'
+
 
 const routes = [
   {
     path: '/',
-    name: 'index',
-    component: edit_index
+    name: 'Home',
+    component: demo_home,
+    describe:"首页"
   }, {
     path: '/edit/index',
     name: 'edit_index',
@@ -47,6 +51,11 @@ const routes = [
     name: 'demo_condition',
     component: demo_condition
   }, {
+    path: '/demo/more_template',
+    name: 'more_template',
+    describe:"更多模板",
+    component: more_template
+  }, {
     path: '/single/heading',
     name: 'single_heading',
     component: single_heading
@@ -57,3 +66,4 @@ const router = createRouter({
   routes
 })
 export default router
+export {routes}

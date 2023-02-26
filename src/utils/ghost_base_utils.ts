@@ -21,9 +21,9 @@ export function runPaddleEnvCode (code, exit = true) {
     'result=`python - <<EOF\n' +
     code +
     'EOF` \n ' +
-    'echo $result'
+    'echo $result' + '\n'
   if (exit) {
-    shell = '\n' + 'exit'
+    shell =  shell + 'exit'
   }
   return runShellCode(shell)
 }

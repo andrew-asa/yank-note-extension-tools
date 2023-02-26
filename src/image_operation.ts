@@ -24,7 +24,7 @@ function clipboardOcr () {
     'from python_tools.ocr.img_ocr import ImageOcr\n' +
     'ocr = ImageOcr()\n' +
     'ocr.ocr_clipboard_img()\n'
-  runPaddleEnvCode(shell)
+  runPaddleEnvCode(shell,true)
 }
 
 /**
@@ -42,7 +42,7 @@ function clipboardTableOcr () {
     'print("--ocr table result --")\n' +
     'print(content)\n' +
     'print("--ocr table result --")\n'
-  runPaddleEnvCode(shell)
+  runPaddleEnvCode(shell, true)
 }
 
 /**
@@ -82,8 +82,6 @@ function removeAb (imgs) {
   }
   return ret
 }
-
-
 
 /**
  * 删除选中的图片外链以及本地图片

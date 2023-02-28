@@ -6,15 +6,15 @@ import { info, warning } from '@/utils/base_ui'
  * 运行脚本
  * @param code
  */
-export function runShellCode (code: string) {
+export function runShellCode(code: string) {
   return ctx.action.getActionHandler('xterm.run')(code)
 }
 
-export function runCode (language: string, code: string, exit: boolean) {
+export function runCode(language: string, code: string, exit: boolean) {
   return ctx.action.getActionHandler('xterm.run-code')(language, code, exit)
 }
 
-export function runPaddleEnvCode (code, exit = true) {
+export function runPaddleEnvCode(code, exit = true) {
   var shell = 'source ~/.bash_profile\n' +
     'conda activate  paddleenv\n' +
     'cd /Users/andrew_asa/Documents/code/github/andrew-asa/exec/python\n' +
@@ -23,12 +23,12 @@ export function runPaddleEnvCode (code, exit = true) {
     'EOF` \n ' +
     'echo $result' + '\n'
   if (exit) {
-    shell =  shell + 'exit'
+    shell = shell + 'exit'
   }
   return runShellCode(shell)
 }
 
-export function asynRunPaddleEnvCode (code, exit = true) {
+export function asynRunPaddleEnvCode(code, exit = true) {
   var shell = 'source ~/.bash_profile\n' +
     'conda activate  paddleenv\n' +
     'cd /Users/andrew_asa/Documents/code/github/andrew-asa/exec/python\n' +
@@ -42,7 +42,7 @@ export function asynRunPaddleEnvCode (code, exit = true) {
   return asynRunShellCode(shell)
 }
 
-export function runPaddleEnvWithParameter (code, p) {
+export function runPaddleEnvWithParameter(code, p) {
   return runPaddleEnvCode(formatParameterStr(code, p))
 }
 
@@ -50,7 +50,7 @@ export function runPaddleEnvWithParameter (code, p) {
  * 添加引号 a = "a"
  * @param str
  */
-export function addQuotationMarks (str) {
+export function addQuotationMarks(str) {
   return '"' + str + '"'
 }
 
@@ -59,7 +59,7 @@ export function addQuotationMarks (str) {
  * @param str
  * @param p
  */
-export function formatParameterStr (str = '', p = {}) {
+export function formatParameterStr(str = '', p = {}) {
   if (str && p) {
     var r = str
     for (let key in p) {
@@ -74,7 +74,7 @@ export function formatParameterStr (str = '', p = {}) {
  * 异步运行代码
  * @param code
  */
-export function asynRunShellCode (code: string) {
+export function asynRunShellCode(code: string) {
   // ctx.api.runCode('sh', code).then(function (p) {
   //   success && success(p)
   // })
@@ -85,15 +85,15 @@ export function asynRunShellCode (code: string) {
   }, tc, true)
 }
 
-export function getEditor () {
+export function getEditor() {
   return ctx.editor.getEditor()
 }
 
-export function getMonaco () {
+export function getMonaco() {
   return ctx.editor.getMonaco()
 }
 
-export function setPosition (line: number, column: number) {
+export function setPosition(line: number, column: number) {
   var editor = getEditor()
   var monaco = getMonaco()
   editor.setPosition(new monaco.Position(line, column))
@@ -107,7 +107,7 @@ export function setPosition (line: number, column: number) {
  * @param endLineNumber
  * @param endColumn
  */
-export function setSelection (startLineNumber, startColumn, endLineNumber, endColumn) {
+export function setSelection(startLineNumber, startColumn, endLineNumber, endColumn) {
   var editor = getEditor()
   editor.setSelection({
     endColumn: endColumn,
@@ -117,21 +117,21 @@ export function setSelection (startLineNumber, startColumn, endLineNumber, endCo
   })
 }
 
-export function createPosition (line, column) {
+export function createPosition(line, column) {
   var monaco = getMonaco()
   return new monaco.Position(line, column)
 }
 
-export function getPosition () {
+export function getPosition() {
   return ctx.editor.getEditor().getPosition()
 }
 
-export function getCurrentLineNumber () {
+export function getCurrentLineNumber() {
   // @ts-ignore
   return ctx.editor.getEditor().getPosition().lineNumber
 }
 
-export function getCurrentColumnNumber () {
+export function getCurrentColumnNumber() {
   // @ts-ignore
   return ctx.editor.getEditor().getPosition().column
 }
@@ -139,7 +139,7 @@ export function getCurrentColumnNumber () {
 /**
  * 获取当前文档的行数
  */
-export function getLineCount () {
+export function getLineCount() {
   // @ts-ignore
   return ctx.editor.getEditor().getModel().getLineCount()
 }
@@ -148,7 +148,7 @@ export function getLineCount () {
  * 获取指定行的文本内容
  * @param lineNumber
  */
-export function getLineContent (lineNumber: number) {
+export function getLineContent(lineNumber: number) {
   return ctx.editor.getLineContent(lineNumber)
 }
 
@@ -157,25 +157,25 @@ export function getLineContent (lineNumber: number) {
  * @param lineStart
  * @param lineEnd
  */
-export function getLinesContent (lineStart: number, lineEnd: number) {
+export function getLinesContent(lineStart: number, lineEnd: number) {
   return ctx.editor.getLinesContent(lineStart, lineEnd)
 }
 
 /**
  * 获取当前光标后行文本内容
  */
-export function getCurrentLineContent () {
+export function getCurrentLineContent() {
   return getLineContent(getCurrentLineNumber())
 }
 
 /**
  * 获取当前仓库
  */
-export function getCurrentRepo () {
+export function getCurrentRepo() {
   return ctx.storage.get('currentRepo')
 }
 
-export function getCurrentFile () {
+export function getCurrentFile() {
   return ctx.storage.get('currentFile')
 }
 
@@ -183,7 +183,7 @@ export function getCurrentFile () {
  * 插入字符
  * @param text
  */
-export function insert (text: string) {
+export function insert(text: string) {
   ctx.editor.insert(text)
 }
 
@@ -191,7 +191,7 @@ export function insert (text: string) {
  * 后面添加行
  * @param text
  */
-export function appendText (text: string) {
+export function appendText(text: string) {
   var lc = getLineCount()
   insertLineAt('\n', lc)
   insertLineAt(text, lc + 1)
@@ -202,15 +202,15 @@ export function appendText (text: string) {
  * @param text
  * @param line
  */
-export function insertLineAt (text: string, line: number) {
+export function insertLineAt(text: string, line: number) {
   ctx.editor.insertAt(createPosition(line, 1), text + '\n')
 }
 
-export function insertAt (line: number, column: number, text: string) {
+export function insertAt(line: number, column: number, text: string) {
   ctx.editor.insertAt(createPosition(line, column), text)
 }
 
-export function replaceLines (lineStart, lineEnd, text) {
+export function replaceLines(lineStart, lineEnd, text) {
   ctx.editor.replaceLines(lineStart, lineEnd, text)
 }
 
@@ -219,7 +219,7 @@ export function replaceLines (lineStart, lineEnd, text) {
  * @param lineNumber
  * @param text
  */
-export function replaceLine (lineNumber, text) {
+export function replaceLine(lineNumber, text) {
   ctx.editor.replaceLine(lineNumber, text)
 }
 
@@ -227,7 +227,7 @@ export function replaceLine (lineNumber, text) {
  * 删除行
  * @param lineNumber
  */
-export function deleteLine (lineNumber: number) {
+export function deleteLine(lineNumber: number) {
   ctx.editor.deleteLine(lineNumber)
 }
 
@@ -236,7 +236,7 @@ export function deleteLine (lineNumber: number) {
  * @param line
  * @param endLine
  */
-export function deleteLines (line: number, endLine: number) {
+export function deleteLines(line: number, endLine: number) {
   const editor = getEditor()
   editor.executeEdits('', [
     {
@@ -252,7 +252,7 @@ export function deleteLines (line: number, endLine: number) {
  * 重复当前行
  * @param text
  */
-export function replaceCurrentLine (text) {
+export function replaceCurrentLine(text) {
   var ln = getCurrentLineNumber()
   replaceLine(ln, text)
 }
@@ -260,7 +260,7 @@ export function replaceCurrentLine (text) {
 /**
  * 删除光标起的行
  */
-export function deleteAfter () {
+export function deleteAfter() {
   var startLineNumber = getCurrentLineNumber()
   var endLineNumber = getLineCount()
   replaceLines(startLineNumber, endLineNumber, null)
@@ -269,7 +269,7 @@ export function deleteAfter () {
 /**
  * 重复行
  */
-export function duplicateLine () {
+export function duplicateLine() {
   var lineNumber = getCurrentLineNumber()
   var content = getLineContent(lineNumber)
   if (content) {
@@ -280,7 +280,7 @@ export function duplicateLine () {
 /**
  * 行上移
  */
-export function moveLineUp () {
+export function moveLineUp() {
   var selectionInfo = getSection()
   let startLine = selectionInfo?.startLineNumber || 0
   let endLine = selectionInfo?.endLineNumber || 0
@@ -301,7 +301,7 @@ export function moveLineUp () {
 /**
  * 行下移
  */
-export function moveLineDown () {
+export function moveLineDown() {
   var selectionInfo = getSection()
   let startLine = selectionInfo?.startLineNumber || 0
   let endLine = selectionInfo?.endLineNumber || 0
@@ -318,28 +318,28 @@ export function moveLineDown () {
 /**
  * 是否是选中一片文字
  */
-export function isSelectText () {
+export function isSelectText() {
   return ctx.editor.getSelectionInfo().selectedLength > 0
 }
 
 /**
  * 获取选中的信息
  */
-export function getSelectionInfo () {
+export function getSelectionInfo() {
   return ctx.editor.getSelectionInfo()
 }
 
 /**
  * 获取选中的信息
  */
-export function getSection () {
+export function getSection() {
   return ctx.editor.getEditor().getSelection()
 }
 
 /**
  * 获取选中的行范围
  */
-export function getSectionLineRange () {
+export function getSectionLineRange() {
   var s = getSection()
   var startLineNumber = s?.startLineNumber || 1
   var endLineNumber = s?.endLineNumber || 1
@@ -349,7 +349,7 @@ export function getSectionLineRange () {
   }
 }
 
-export function getViewDom () {
+export function getViewDom() {
   // @ts-ignore
   return ctx.view.getViewDom()
 }
@@ -360,7 +360,7 @@ export function getViewDom () {
  * @param arg
  * @param arg_val
  */
-export function changeURLArg (url, arg, arg_val) {
+export function changeURLArg(url, arg, arg_val) {
   var pattern = arg + '=([^&]*)'
   var replaceText = arg + '=' + arg_val
   if (url.match(pattern)) {
@@ -380,7 +380,7 @@ export function changeURLArg (url, arg, arg_val) {
  * 刷新本地图片
  * @param originSrc
  */
-export function refreshLocalImg (originSrc: string) {
+export function refreshLocalImg(originSrc: string) {
   var imgDoms = getImgDom()
   if (imgDoms && imgDoms.length) {
     for (var i = 0; i < imgDoms.length; i++) {
@@ -402,10 +402,10 @@ export function refreshLocalImg (originSrc: string) {
 /**
  * 刷新选中行的本地图片
  */
-export function refreshSelectLocalImgs () {
+export function refreshSelectLocalImgs() {
 
   travelSelectionLine(function (i) {
-    console.log("Refresh Select Local Img Line " +i)
+    console.log("Refresh Select Local Img Line " + i)
     var links = getLineImgLinks(i)
     links.forEach(function (link) {
       refreshLocalImg(link)
@@ -414,7 +414,7 @@ export function refreshSelectLocalImgs () {
 
 }
 
-export function travelSelectionLine (fun) {
+export function travelSelectionLine(fun) {
   var {
     startLineNumber,
     endLineNumber
@@ -424,7 +424,7 @@ export function travelSelectionLine (fun) {
   }
 }
 
-export function getImgDom () {
+export function getImgDom() {
   // @ts-ignore
   return ctx.view.getViewDom().querySelectorAll('img')
 }
@@ -432,7 +432,7 @@ export function getImgDom () {
 /**
  * 获取当前文档的所有本地图片
  */
-export function getLocalImgPaths () {
+export function getLocalImgPaths() {
   var imgList = getImgDom()
   var result = []
   for (let i = 0; i < imgList.length; i++) {
@@ -452,14 +452,14 @@ export function getLocalImgPaths () {
  * @param content
  * @param src
  */
-export function buildMdSrcContent (content, src) {
+export function buildMdSrcContent(content, src) {
   return '![' + content + '](' + src + ')'
 }
 
 /**
  * 获取选中文本的所有本地图片
  */
-export function getSelectionImgPaths () {
+export function getSelectionImgPaths() {
   var s = getSection()
   var startLineNumber = s?.startLineNumber || 0
   var endLineNumber = s?.endLineNumber || 1
@@ -474,7 +474,7 @@ export function getSelectionImgPaths () {
  * 获取指定行的图片地址
  * @param line
  */
-export function getLineImgPaths (line: number) {
+export function getLineImgPaths(line: number) {
   var content = getLineContent(line)
   var links = parseImgLink(content)
   var currentFile = getCurrentFile()
@@ -496,12 +496,12 @@ export function getLineImgPaths (line: number) {
  * 获取图片链接
  * @param line
  */
-export function getLineImgLinks (line: number) {
+export function getLineImgLinks(line: number) {
   var content = getLineContent(line)
   var links = parseImgLink(content)
   var ret = []
   // @ts-ignore
-  if (links.length >0) {
+  if (links.length > 0) {
     links.forEach((item) => {
       var link = item[2]
       ret.push(link)
@@ -510,7 +510,7 @@ export function getLineImgLinks (line: number) {
   return ret
 }
 
-export function resolveCurrentImgPath (link) {
+export function resolveCurrentImgPath(link) {
   var currentFile = getCurrentFile()
   // @ts-ignore
   var dir = dirname(currentFile.path)
@@ -521,7 +521,7 @@ export function resolveCurrentImgPath (link) {
  * 替换选中的文档
  * @param text
  */
-export function replaceSelect (text: string) {
+export function replaceSelect(text: string) {
   const selection = ctx.editor.getEditor().getSelection()!
   ctx.editor.getEditor().executeEdits('', [
     {
@@ -536,7 +536,7 @@ export function replaceSelect (text: string) {
 /**
  * 获取选中的内容
  */
-export function getSelectText () {
+export function getSelectText() {
   const selection = ctx.editor.getEditor().getSelection()
   // @ts-ignore
   return ctx.editor.getEditor().getModel().getValueInRange(selection)
@@ -546,7 +546,7 @@ export function getSelectText () {
  * 删除文档
  * @param doc
  */
-export function deleteDoc (doc) {
+export function deleteDoc(doc) {
   ctx.doc.deleteDoc(doc)
 }
 
@@ -554,7 +554,7 @@ export function deleteDoc (doc) {
  * 直接删除文件，没有
  * @param doc
  */
-export async function deleteFile (doc) {
+export async function deleteFile(doc) {
   try {
     await ctx.api.deleteFile(doc)
   } catch (error: any) {
@@ -568,7 +568,7 @@ export async function deleteFile (doc) {
  * 文件名
  * @param p
  */
-export function basename (p) {
+export function basename(p) {
   return ctx.utils.path.basename(p)
 }
 
@@ -576,14 +576,14 @@ export function basename (p) {
  * 目录名
  * @param p
  */
-export function dirname (p) {
+export function dirname(p) {
   return ctx.utils.path.dirname(p)
 }
 
 /**
  * 刷新目录树
  */
-export function refreshTree () {
+export function refreshTree() {
   ctx.tree.refreshTree()
 }
 
@@ -592,7 +592,7 @@ export function refreshTree () {
  * @param dir
  * @param name
  */
-export function resolve (dir, name) {
+export function resolve(dir, name) {
   return ctx.utils.path.resolve(dir, name)
 }
 
@@ -600,7 +600,7 @@ export function resolve (dir, name) {
  * 路径拼接
  * @param paths
  */
-export function join (...paths: string[]) {
+export function join(...paths: string[]) {
   return ctx.utils.path.join(...paths)
 }
 
@@ -609,11 +609,11 @@ export function join (...paths: string[]) {
  * @param link
  * @returns {boolean}
  */
-export function isOutLocationImage (link) {
+export function isOutLocationImage(link) {
   return link && link.startsWith('./FILES/')
 }
 
-export function createLinkImgFileDoc () {
+export function createLinkImgFileDoc() {
 
 }
 
@@ -622,7 +622,7 @@ export function createLinkImgFileDoc () {
  * @param lineNumber  第几行
  * @param force   是否强制删除没有提示
  */
-export function deleteOutLinkLocationImage (lineNumber = -1, force = false) {
+export function deleteOutLinkLocationImage(lineNumber = -1, force = false) {
   var ln = lineNumber == -1 ? getCurrentLineNumber() : lineNumber
   var content = getLineContent(ln)
   var links = parseImgLink(content)
@@ -651,12 +651,12 @@ export function deleteOutLinkLocationImage (lineNumber = -1, force = false) {
   }
 }
 
-export function containLink (link) {
+export function containLink(link) {
   var r = /\!\[(.*?)\]\(.+\)/g
   return link && r.test(link)
 }
 
-export function parseImgLink (link) {
+export function parseImgLink(link) {
   const pattern = /!\[(.*?)\]\((.*?)\)/mg
   let matcher
   var ret = []
@@ -667,7 +667,7 @@ export function parseImgLink (link) {
   return ret
 }
 
-export function createI18n (key: string, cn: string, en: string) {
+export function createI18n(key: string, cn: string, en: string) {
   const enI = {}
   enI[key] = en
   const cnI = {}
@@ -681,7 +681,7 @@ export function createI18n (key: string, cn: string, en: string) {
 /**
  * resize
  */
-export function global_resize () {
+export function global_resize() {
   try {
 
   } catch (e) {
@@ -694,7 +694,7 @@ export function global_resize () {
  * @param fn
  * @param paras
  */
-export function run_no_exception (fn: Function, ...paras) {
+export function run_no_exception(fn: Function, ...paras) {
   try {
     fn(...paras)
   } catch (e) {
@@ -706,7 +706,7 @@ export function run_no_exception (fn: Function, ...paras) {
  * 随机字符串
  * @param len
  */
-export function randomString (len: number) {
+export function randomString(len: number) {
   len = len || 32
   var t = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678',
     a = t.length,
@@ -717,7 +717,7 @@ export function randomString (len: number) {
 
 export const HEADING_REG = /^#{1,6}\s/
 
-export function getHeadingLevel (text: string) {
+export function getHeadingLevel(text: string) {
   if (isNoEmpty(text)) {
     let r = text.match(HEADING_REG)
     if (r != null && r.length > 0) {
@@ -731,7 +731,7 @@ export function getHeadingLevel (text: string) {
 /**
  * 后方增加同级目录
  */
-export function addPeerDirectoryAfter () {
+export function addPeerDirectoryAfter() {
   let ln = getCurrentLineNumber()
   let text = getCurrentLineContent()
   if (testStr(text, HEADING_REG)) {
@@ -754,7 +754,7 @@ export function addPeerDirectoryAfter () {
  * @param level
  * @param lineNumber
  */
-export function addHeading (level: number, lineNumber: number) {
+export function addHeading(level: number, lineNumber: number) {
   if (level > 0) {
     let insertText = '#'.repeat(level) + ' '
     // insertLineAt(insertText, lineNumber)
@@ -774,7 +774,7 @@ export function addHeading (level: number, lineNumber: number) {
 /**
  * 前方增加同级目录
  */
-export function addPeerDirectoryBefore () {
+export function addPeerDirectoryBefore() {
   let ln = getCurrentLineNumber()
   let text = getCurrentLineContent()
   if (testStr(text, HEADING_REG)) {
@@ -786,7 +786,7 @@ export function addPeerDirectoryBefore () {
 /**
  * 删除当前目录
  */
-export function removeCurrentDirectory () {
+export function removeCurrentDirectory() {
   let range = getCurrentDirectoryRange()
   deleteLines(range.startLine, range.endLine)
 }
@@ -794,14 +794,14 @@ export function removeCurrentDirectory () {
 /**
  * 获取当前目录范围
  */
-export function getCurrentDirectoryRange () {
+export function getCurrentDirectoryRange() {
   return getDirectoryRange(getCurrentLineNumber())
 }
 
 /**
  * 获取当前目录范围
  */
-export function getDirectoryRange (line: number) {
+export function getDirectoryRange(line: number) {
   let startLine = line < 1 ? 1 : line
   let text = getLineContent(line)
   let endLine = startLine
@@ -825,7 +825,7 @@ export function getDirectoryRange (line: number) {
   }
 }
 
-export function createSplicingOfMovieLinesScript (img_folder, img_list, out, top_padding, bottom_padding) {
+export function createSplicingOfMovieLinesScript(img_folder, img_list, out, top_padding, bottom_padding) {
   var shell = 'from python_tools.img.screenshots.join_screenshots import Screenshot_Join\n' +
     'img_folder = "${img_folder}"\n' +
     'img_list = "${img_list}"\n' +
@@ -837,12 +837,12 @@ export function createSplicingOfMovieLinesScript (img_folder, img_list, out, top
   return formatParameterStr(shell, splicingOfMovieLinesParameter(img_folder, img_list, out, top_padding, bottom_padding))
 }
 
-export function splicingOfMovieLines (img_folder, img_list, out, top_padding, bottom_padding) {
+export function splicingOfMovieLines(img_folder, img_list, out, top_padding, bottom_padding) {
   var shell = createSplicingOfMovieLinesScript(img_folder, img_list, out, top_padding, bottom_padding)
   return runPaddleEnvCode(shell, false)
 }
 
-export function splicingOfMovieLinesParameter (img_folder, img_list, out, top_padding, bottom_padding) {
+export function splicingOfMovieLinesParameter(img_folder, img_list, out, top_padding, bottom_padding) {
   return {
     img_folder: img_folder,
     img_list: img_list,
@@ -851,3 +851,6 @@ export function splicingOfMovieLinesParameter (img_folder, img_list, out, top_pa
     bottom_padding: bottom_padding
   }
 }
+
+
+

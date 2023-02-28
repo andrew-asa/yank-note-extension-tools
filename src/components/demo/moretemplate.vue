@@ -10,17 +10,35 @@ export default {
     setup() {
 
         const templates = [{
-            id:"acb",
+            id: "acb",
             descript: "星期几",
-            template: "{{星期几}}"
+            template: "{{星期几}}",
+            updateTime:"1677392897093",
         }, {
-            id:"efg",
+            id: "efg",
             descript: "日期",
-            template: "{{date-yyyy-mm-dd}}"
-        },, {
-            id:"hfg",
-            descript: "测试",
-            template: "今天是个好日子"
+            template: "{{date-yyyy-mm-dd}}",
+            updateTime:"1677392897093"
+        }, {
+            id: "hfg",
+            descript: "测试a",
+            template: "今天是个好日子",
+            updateTime:"1677392897093"
+        },{
+            id: "acba",
+            descript: "星期几a",
+            template: "{{星期几}}",
+            updateTime:"1677392897093",
+        }, {
+            id: "efga",
+            descript: "日期a",
+            template: "{{date-yyyy-mm-dd}}",
+            updateTime:"1677392897093"
+        }, {
+            id: "hfga",
+            descript: "测试a",
+            template: "今天是个好日子a",
+            updateTime:"1677392897093"
         }]
         return {
             templates

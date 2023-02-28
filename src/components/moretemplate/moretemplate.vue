@@ -1,10 +1,10 @@
 <template>
   <el-row>
     <el-col :span="4">
-      <left></left>
+      <left :templates="templates" @clickCard=editCard></left>
     </el-col>
-    <el-col :span="16">
-      <right></right>
+    <el-col :span="16" :offset="1">
+      <right :activeCary="activeCary"></right>
     </el-col>
   </el-row>
 </template>
@@ -16,20 +16,26 @@ import Right from './right.vue'
 export default {
   props: {
     // 模板信息
-    templates:{
+    templates: {
       type: Array,
       default: []
     }
   },
+  data() {
+    return {
+      activeCary: {}
+    }
+  },
   components: {
-    Left,Right
+    Left, Right
   },
   stetup() {
 
-    return {
-    }
   },
   methods: {
+    editCard(c) {
+      this.activeCary = c
+    }
 
   }
 }
@@ -37,6 +43,4 @@ export default {
 </script>
 
 
-<style>
-
-</style>
+<style></style>

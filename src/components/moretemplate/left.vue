@@ -9,10 +9,26 @@
         @keyup.enter.native="searchTemplate" /></el-col>
   </el-row>
   <div>
+    <el-row>
+      <el-col :span="10">
+
+      </el-col>
+      <el-col :span="4">
+        <div class="active-button">
+          <el-icon :size="24">
+            <Plus />
+          </el-icon>
+        </div>
+      </el-col>
+      <el-col :span="10">
+
+      </el-col>
+    </el-row>
 
 
   </div>
-  <el-scrollbar max-height="800px">
+
+  <el-scrollbar max-height="600px">
     <el-card :class='{ active: activeId == t.id }' class="card" shadow="hover" v-for="t in showTemplates"
       @click="activeTemplate($event, t)">
 
@@ -24,7 +40,7 @@
           <!-- <el-button circle class="svg-icon"> <font-awesome-icon :icon=faEllipsis></font-awesome-icon> </el-button> -->
           <el-popover placement="right-start" trigger="click">
             <el-button link class="svg-icon" :icon="Delete" @click="deleteTemplate($event, t)"> </el-button>
-            <el-button link class="svg-icon" :icon="Plus"> </el-button>
+
             <template #reference>
               <!-- <el-button circle class="svg-icon"> <font-awesome-icon :icon=faEllipsis></font-awesome-icon> </el-button> -->
               <el-button link class="card-op" :icon="More"> </el-button>
@@ -80,8 +96,8 @@ export default {
     getTime(t) {
       return formatDate(t)
     },
-    cardActive(t) {
-      return this.activeId == t
+    addTemplate() {
+
     },
     deleteTemplate(enent, t) {
       var self = this
@@ -109,17 +125,33 @@ export default {
         var ds = t.descript
         return ds && ds.indexOf(s) != -1
       })
-      this.showTemplates.value = st
-      console.log(st)
+      this.reRender(st)
+      // this.showTemplates.splice(0, this.showTemplates.length)
+      // for (let t in st) {
+      //   this.showTemplates.push(st[t])
+      // }
     },
     doDeleteTemplate(t) {
-      console.log(t)
       var self = this
       self.templates.forEach(function (item, index, arr) {
         if (item.id == t.id) {
           self.templates.splice(index, 1);
         }
       });
+      self.showTemplates.forEach(function (item, index, arr) {
+        if (item.id == t.id) {
+          self.showTemplates.splice(index, 1);
+        }
+      });
+      this.$emit('delete', t)
+    },
+    reRender(ts) {
+      this.showTemplates.splice(0, this.showTemplates.length)
+      for (let t in ts) {
+        this.showTemplates.push(ts[t])
+      }
+    },
+    addTemplate() {
 
     }
   }
@@ -152,6 +184,17 @@ export default {
 }
 
 .svg-icon:hover {
+  background-color: #dde1e3;
+}
+
+.active-button {
+  transform: scale(1);
+}
+
+.active-button:active {
+  transform: scale(0.9);
+}
+.active-button > i:hover {
   background-color: #dde1e3;
 }
 </style>

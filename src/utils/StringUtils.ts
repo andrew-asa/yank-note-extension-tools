@@ -70,3 +70,16 @@ export function isNoNegativeInteger (s:string) {
 export function isEqual (str1, str2) {
   return str1 == str2
 }
+
+/**
+ * 随机字符串
+ * @param len
+ */
+export function randomString(len: number) {
+  len = len || 32
+  var t = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678',
+    a = t.length,
+    n = ''
+  for (var i = 0; i < len; i++) n += t.charAt(Math.floor(Math.random() * a))
+  return n
+}

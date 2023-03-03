@@ -14,7 +14,7 @@
 
       </el-col>
       <el-col :span="4">
-        <div class="active-button">
+        <div class="active-button" @click="addTemplate">
           <el-icon :size="24">
             <Plus />
           </el-icon>
@@ -52,12 +52,13 @@
   </el-scrollbar>
 </template>
 <script lang="ts">
-import { formatDate } from '@/utils/ghost_base_date';
+import { formatDate, getCurrentTimestamp } from '@/utils/ghost_base_date';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import letfoperation from './letfoperation.vue'
 import { Search, Plus, Delete, More } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
 import { reactive, ref } from 'vue';
+import { randomString } from '@/utils/StringUtils';
 
 export default {
   props: {
@@ -90,14 +91,32 @@ export default {
 
     activeTemplate(event, t) {
       // console.log(t)
+      this.doActiveTemplete(t)
+    },
+    doActiveTemplete(t) {
       this.activeId = t.id
-      this.$emit("clickCard", t)
+      this.$emit("edit", t)
     },
     getTime(t) {
       return formatDate(t)
     },
     addTemplate() {
-
+      var id = randomString(10)
+      var updateTime = getCurrentTimestamp() + ''
+      var t = {
+        id: id,
+        descript: "添加模板",
+        template: "模板",
+        updateTime: updateTime
+      }
+      this.doAddTemplate(t)
+      this.activeTemplate(null, t)
+    },
+    doAddTemplate(t) {
+      var self = this
+      self.templates.unshift(t);
+      self.showTemplates.unshift(t);
+      this.$emit('add', t)
     },
     deleteTemplate(enent, t) {
       var self = this
@@ -126,10 +145,6 @@ export default {
         return ds && ds.indexOf(s) != -1
       })
       this.reRender(st)
-      // this.showTemplates.splice(0, this.showTemplates.length)
-      // for (let t in st) {
-      //   this.showTemplates.push(st[t])
-      // }
     },
     doDeleteTemplate(t) {
       var self = this
@@ -144,6 +159,9 @@ export default {
         }
       });
       this.$emit('delete', t)
+      if (self.showTemplates.length > 0) {
+        self.doActiveTemplete(self.showTemplates[0])
+      }
     },
     reRender(ts) {
       this.showTemplates.splice(0, this.showTemplates.length)
@@ -151,9 +169,7 @@ export default {
         this.showTemplates.push(ts[t])
       }
     },
-    addTemplate() {
 
-    }
   }
 }
 
@@ -194,7 +210,8 @@ export default {
 .active-button:active {
   transform: scale(0.9);
 }
-.active-button > i:hover {
+
+.active-button>i:hover {
   background-color: #dde1e3;
 }
 </style>

@@ -4,22 +4,25 @@ import * as string_utils from './StringUtils'
 import * as pinyin_utils from './ghost_base_pinyin'
 import * as date_utils from './ghost_base_date'
 import * as base_ui from '@/utils/base_ui'
+import * as template from '@/utils/template'
+
 
 const ghost = Object.freeze({
   base_dom,
   base_utils,
   base_ui,
-  base:{
+  base: {
     string_utils,
     pinyin_utils,
-    date_utils
-  }
+    date_utils,
+    template,
+  },
 })
 
 export type Ghost = typeof ghost
 export default ghost
 
-export function installGhost () {
+export function installGhost() {
   console.log('enhance installGhost')
   try {
     Object.defineProperty(window, 'yank_enhance', {

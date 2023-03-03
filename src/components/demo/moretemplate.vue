@@ -12,12 +12,12 @@ export default {
         const templates = [{
             id: "acb",
             descript: "星期几",
-            template: "{{星期几}}",
+            template: "{{今天}} {{星期几}}",
             updateTime:"1677392897093",
         }, {
             id: "efg",
             descript: "日期",
-            template: "{{date-yyyy-mm-dd}}",
+            template: `[上一日](./{{昨天}}.md)\n[下一日](./{{明天}}.md)`,
             updateTime:"1677392897093"
         }, {
             id: "hfg",

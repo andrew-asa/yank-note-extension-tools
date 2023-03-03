@@ -1,10 +1,10 @@
 <template>
   <el-row>
     <el-col :span="4">
-      <left :templates="templates" @clickCard=editCard></left>
+      <left :templates="templates" @edit=editCard @delete=deleteCard></left>
     </el-col>
     <el-col :span="16" :offset="1">
-      <right :activeCary="activeCary"></right>
+      <right :activeCary="activeCary" @save="saveCard"></right>
     </el-col>
   </el-row>
 </template>
@@ -35,8 +35,21 @@ export default {
   methods: {
     editCard(c) {
       this.activeCary = c
+    },
+    deleteCard(t) {
+      // console.log(this.templates)
+    },
+    saveCard(t) {
+      // console.log(this.templates)
     }
-
+  },
+  watch: {
+    templates: {
+      handler(newValue, oldValue) {
+        console.log('props', newValue)
+      },
+      deep: true
+    }
   }
 }
 
